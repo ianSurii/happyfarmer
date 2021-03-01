@@ -13,7 +13,7 @@
         box-shadow: 0px 0px 12px #EFEFEF;
       }
     </style>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuUhnC2p8pB65r6S9oHyXQdKY3VvUUqCI&libraries=places"></script>>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=API&libraries=places"></script>>
   </head>
   <body>
     <input type="text" id="autocomplete"/>
