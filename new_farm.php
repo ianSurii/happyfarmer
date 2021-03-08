@@ -51,7 +51,7 @@ $execute=new dbFunction();
                                                  </div>
                                              </div>
                                         </div>
-                                         <button type="submit" class="btn btn-success btn-lg btn-block" name="add_farm">Sign In</button>
+                                         <button type="submit" class="btn btn-success btn-lg btn-block" name="add_farm"><span></span>ADD</button>
                                      </form>
 </div>
 <?php

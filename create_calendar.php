@@ -27,7 +27,7 @@ if(isset($_POST['create'])){
             $value="$task_id,$id,'$title',$i";
             $create_tasks=$execute->insert('task',$column,$value); 
             if($create_tasks==true){
-            header('Location:edit_calendar_task.php');
+            header('Location:view_calendars.php');
             // $_SESSION['task_id']=$task_id;
             }else{
                 echo "<script>window.alert('fill details')</script>";

@@ -18,9 +18,7 @@ $execute=new dbFunction();
         require 'includes/header.inc';
         require 'includes/navbar.inc';
         include 'includes/sidemenu.php';
-        $calendars=$execute->selectAll("farm_calendars");
-        if($calendars==true){
-         
+       
        
 
         
@@ -81,6 +79,9 @@ $execute=new dbFunction();
                                         </style>
                                         <tbody>
                                             <?php
+                                             $calendars=$execute->selectAll("farm_calendars");
+                                             if($calendars==true){
+                                              
                                                foreach($calendars as $calendar){
                                                    echo"
                                             <tr>
@@ -96,7 +97,20 @@ $execute=new dbFunction();
                                                 <td><a  class='badge badge-info' href='view_task.php?calendar_id=".$calendar['id']."'>Edit</a></td>
                                                 </tr>
                                             ";
-                                               }}
+                                               }}else{
+
+                                                echo"
+                                                <tr class='row'><tr>
+                                                
+                                              
+                                                 <h2 class='text-danger'> Create New Calendars </h2>
+                                               </tr>
+                                                </tr>
+                                                   
+                                                    </tr>
+                                                ";
+
+                                               }
                                             ?>
                                             
                                         </tbody>

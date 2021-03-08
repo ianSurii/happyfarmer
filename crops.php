@@ -18,7 +18,7 @@ $execute=new dbFunction();
         require 'includes/header.inc';
         require 'includes/navbar.inc';
         include 'includes/sidemenu.php';
-        $places=$execute->selectAll("regions");
+        $places=$execute->selectAll("crops");
         if($places==true){
          
        
@@ -33,12 +33,12 @@ $execute=new dbFunction();
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Regions</a></li>
+                                            <li class="breadcrumb-item"><a href="crops.php" class="breadcrumb-link">Crops</a></li>
                                             <li class="breadcrumb-item active" aria-current="page">View</li>
                                         </ol>
                                     </nav>
                                 </div>
-                                <a class="badge badge-info" href='create_region.php'>Add new Region <span class="fas fa-calendar-plus"></span></a>
+                                <a class="badge badge-info" href='new_crop.php'>New Crops <span class="fas fa-calendar-plus"></span></a>
                             </div>
                            
                         
@@ -62,12 +62,9 @@ $execute=new dbFunction();
                                                 <th scope="col">#</th>
                                                 <th scope="col">Name</th>
                                                 
-                                                <th scope="col">latitude</th>
-                                                <th scope="col">Longtude</th>
-                                                <th scope="col">Details</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Editor 1</th>
-                                                <th scope="col">Edit</th>
+                                                <th scope="col">variety</th>
+                                                <th scope="col">Regions</th>
+                                                
                                             </tr>
                                         </thead>
                                         <style>
@@ -85,19 +82,24 @@ $execute=new dbFunction();
                                                    echo"
                                             <tr>
                                                 <th scope='row'>".$place['id']."</th>
-                                                <td >".$place['name']."</td>
-                                                <td>".$place['latitude']."</td>
-                                                <td>".$place['longtitude']."</td>
-                                                <td>".$place['place_details']."</td>
-                                                <td>".$place['date_added']."</td>
-                                                <td>".$place['admin']."</td>
+                                                <td >".$place['crop_name']."</td>
+                                                <td>".$place['crop_variety']."</td>
+                                                <td>".$place['crop_locations']."</td>
+                                                
                                                 <td><a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
                                                 <a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
                                                 <input type='checkbox' href='view_task.php?calendar_id=".$place['id']."'></td>
                                                 </tr>
                                             ";
                                                }}
-                                            ?>
+
+                                            }else{
+                                                echo"
+                                            <tr>
+                                                There is no Crops recorded
+                                            ";
+
+                                               ?>
                                             
                                         </tbody>
                                     </table>
@@ -109,8 +111,7 @@ $execute=new dbFunction();
                                      </form>
     </div>
                                      <?php
-            
-}else{
+
     header('Location:index.php');
 }
 ?>
