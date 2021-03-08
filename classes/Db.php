@@ -1,9 +1,10 @@
 <?php
 session_start();
-define('servername','localhost');
-define('username','root');
-define('password','');
-define('dbname','happyfarmer');
+define('servername','us-cdbr-east-03.cleardb.com');
+define('username','heroku_fa93cedb859fa1b');
+define('password','483f9647');
+define('dbname','heroku_fa93cedb859fa1b');
+//483f9647@us-cdbr-east-03.cleardb.com heroku_fa93cedb859fa1b
 class db{
     function __construct(){
 		$this->connection = new mysqli(servername, username,password,dbname);
