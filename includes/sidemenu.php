@@ -26,12 +26,24 @@
 
                             if($usertype==1){
                                 echo" <li class='nav-item'>
-                                <a class='nav-link' href='farms.php'>Farms2</a>
+                                <a class='nav-link' href='farms.php'>Task</a>
                                 </li>";
 
                             }elseif($usertype==11){
                                 echo" <li class='nav-item'>
-                                <a class='nav-link' href='farms.php'>Farms1</a>
+                                <a class='nav-link fas fa-square-full' href='farmer.php'>Dashboard</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fas fa-tree' href='farms.php'>Farms</a>
+                                </li>
+                                 <li class='nav-item'>
+                                <a class='nav-link fas fa-arrows-alt' href='employees.php'>Employees</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-calendar-alt' href='reports.php'>Reports</a>
+                                </li>
+                                 <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-gift' href='inventory.php'>Invetory</a>
                                 </li>";
 
                             }elseif($usertype==111){
@@ -39,7 +51,7 @@
                                 <a class='nav-link fas fa-square-full' href='admin.php'>Dashboard</a>
                                 </li>
                                 <li class='nav-item'>
-                                <a class='nav-link fas fa-tree' href='cropsls.php'>Crops</a>
+                                <a class='nav-link fas fa-tree' href='crops.php'>Crops</a>
                                 </li>
                                  <li class='nav-item'>
                                 <a class='nav-link fas fa-location-arrow' href='regions.php'>Regions</a>

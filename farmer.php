@@ -4,6 +4,9 @@ include 'includes/header.inc';
 include 'includes/navbar.inc';
 include 'includes/sidemenu.php';
 $execute=new dbFunction();
+
+$user_id=$_SESSION['user_id'];
+
 ?>
 <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
@@ -43,17 +46,21 @@ $execute=new dbFunction();
 
                         <div class="row">
                             <?php
-                          $select_crops=$execute->conditionSelect("count(crop_name) as crops_count","crops");
+                           
+                          $select_crops=$execute->conditionSelect("count(employee_id) as employees","employees where employer='$user_id'");
                           if($select_crops==true){
                           
                           ?>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Crops</h5>
+                                        <h5 class="text-muted">Employees</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1"><?php foreach($select_crops as $crops){
-                                               echo "    ".$crops['crops_count'];}}?>
+                                               echo "    ".$crops['employees'];
+                                               }}
+                                          
+                                               ?>
                                                 </h1>
                                         </div>
                                         </br>
@@ -98,10 +105,21 @@ $execute=new dbFunction();
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Visitors</h5>
+                                        <h5 class="text-muted">Farms</h5>
                                         <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">13000</h1>
+                                            <h1 class="mb-1">
+                                            <?php
+                                            $select_crops=$execute->conditionSelect("count(employee_id) as employees","employees where employer='$user_id'");
+                          if($select_crops==true){
+                            foreach($calendars as $calendar){
+                                echo "    ".$calendar['count_calendar'];}}
+
+                              ?></h1>
+
+                              <br>
+                              </br>
                                         </div>
+                                       
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                             <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span>
                                         </div>

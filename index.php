@@ -9,24 +9,24 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
     if(empty(trim($first_name))){
         $first_name_err="Name can not be blank";
     }else{
-        $first_name=$first_name;
+        $first_name=trim($first_name);
         
     }
     if(empty(trim($last_name))){
         $last_name_err="Last Name can not be blank";
     }else{
-        $last_name=$last_name;
+        $last_name=trim($last_name);
     }
     if(empty(trim($email))){
         $email_err="Username can not be blank";
     }else{
-        $email=$email;
+        $email=trim($email);
     }
     
     if(empty(trim($username))){
         $username_err="Username can not be blank";
     }else{
-        $username=$username;
+        $username=trim($username);
     }
     if(empty(trim($password))){
         $password_err="Enter passowrd";
@@ -35,7 +35,7 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
         
     }
     else{
-            $password=$password;
+            $password=trim($password);
     }
     if(empty(trim($cpassword))){
         $cpassword_err="Please cornfirm Password";
@@ -43,12 +43,12 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
         $cpassword_err="Password does not match";
 
     }else{
-        $cpassword=$cpassword;
+        $cpassword=trim($cpassword);
     }
     if(empty(trim($residence))){
         $residence_err="Enter a valid residence";
     }else{
-        $residence=$residence;
+        $residence=trim($residence);
     }
     if(empty(trim($phone))){
         $phone_err="Please enter valid username";
@@ -56,7 +56,7 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
         $phone_err="Enter Valid phone number 0712345678";
 
     }else{
-        $phone=$phone;
+        $phone=trim($phone);
     }
 
 
@@ -69,7 +69,7 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
         $register=$execute->insert("user_records","first_name,last_name,user_name,email,`password`,residence,user_type,phone_number,county ","'$first_name','$last_name','$username','$email','$encrypted_password','$residence','001','$phone','Kenya'");
         if($register==true){
             $_SESSION['username']=$username;
-        
+            
             header('Location:worker.php');
         }
         else{
@@ -95,6 +95,13 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
             $usertype=$login[0]['user_type'];
             // echo "<script>window.alert('".$usertype."')</script>";
             $_SESSION['usertype']=$usertype;
+            $name=trim($user_name);
+            $user_id=$execute->conditionSelect("id as id"," user_records WHERE user_name='$name'");
+            foreach($user_id as $id){
+            $session_id=$id['id'];
+
+            $_SESSION['user_id']=$session_id;
+            }
             if($login[0]['user_type']==1){
                 
             header('Location:worker.php');
