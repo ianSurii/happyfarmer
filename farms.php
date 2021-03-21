@@ -36,7 +36,19 @@ $execute=new dbFunction();
                                         </ol>
                                     </nav>
                                 </div>
-                                <a class="badge badge-info" href='farm_calendar.php'>Add Farm Calendar <span class="fas fa-calendar-plus"></span></a>
+                                <style>
+                                .hide{
+                                    display:none;
+
+                                }
+                                .myDIV:hover + .hide {
+                                display: block;
+                                color: red;
+                                }
+                                </style>
+                                <div class="myDIV">
+                                <a class="badge badge-secondary" href='farm_calendar.php'>Add Calendar To Farm<span class="fas fa-calendar-plus"></span></a><a class="badge badge-primary" href='new_farms.php'> Add FARM<span class="fas fa-plus"></span></a>
+                                </div>
                             </div>
                            
                         
@@ -67,13 +79,9 @@ $username=$_SESSION['username'];
 
     $cardname=str_replace(' ', '',$result);
 
-            $active_calendars=$execute->select("farmer_calendars","where user_name='$username' && calendar_end_date<CURRENT_DATE && farm_id='$id'");
-            if($active_calendars==true){
-            foreach($active_calendars as $active_calendar){
-              
-            if($active_calendars==true){
-                $calendar_id=$active_calendar['calendar_id'];
-                $tasks=$execute->conditionSelect("count(id) as task","task where calendar_id='$calendar_id'");
+            
+                // $tasks=$execute->conditionSelect("count(id) as task","task where calendar_id='$calendar_id'");
+                
                 
                     echo    "
                     <script type='text/javascript' language='javascript'>
@@ -96,27 +104,48 @@ $username=$_SESSION['username'];
                                     <div class='float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1'>
                                         <i class='fa fa-eye fa-fw fa-sm text-info'></i>
                                     </div>
-                                    <div id='".$farm['id']."' style='display:none;'>
+                                    
+                                    <div id='".$farm['id']."' style='display:none;'>";
+                                    $active_calendars=$execute->conditionSelect("distinct(farm_id) as farm_id,calendar_id,calendar_end_date,calendar_name","farmer_calendars where user_name='$username' && calendar_end_date>CURRENT_DATE && farm_id='$id' && status='1'");
+                                    if($active_calendars==true){
+                                    // if($active_calendars==true){
+                        
+                                    foreach($active_calendars as $active_calendar){
+                                      
+                                        $calendar_id=$active_calendar['calendar_id'];
+                                        $tasks=$execute->conditionSelect("count(id) as task ","task where calendar_id='$calendar_id'");
+                                        $data=array();
+                                        $all_task=$execute->conditionSelect("id as id","task where calendar_id='$calendar_id'");
+                                        foreach($all_task as $task_id){
+
+                                            $activities=$execute->conditionSelect("activity","activity where task_id='".$task_id['id']."'");
+                                            $data+=$activities;
+                                        }
+                                       
+
+                                    echo"
+                                    
                                    
                                     <table class='table table-hover'>
                                         <thead>
                                             <tr>
 
 
-                                            <th scope='col'>Crop</th>
+                                            <th scope='col'>Name</th>
                                             <th scope='col'>Task</th>
                                             <th scope='col'>Activities</th>
                                             <th scope='col'>Progress</th>
                                             <th scope='col'>Ending</th>
                                             </tr>
                                         </thead>
+                            
                                         <tbody>
                                            
                                             <tr>
                                             <th scope='col'>".$active_calendar['calendar_name']."</th>
                                             <th scope='col'>".$tasks[0]['task']."</th>
+                                            <th scope='col'>".count($data)."</th>
                                             <th scope='col'>".$active_calendar['calendar_id']."</th>
-                                            <th scope='col'>".$active_calendar['id']."</th>
                                             <th scope='col'>".$active_calendar['calendar_end_date']."</th>
                                                 </tr>
                                           
@@ -131,31 +160,11 @@ $username=$_SESSION['username'];
                                 </div>
                                 </div>
                             </div>
-                            ";}}}else{
+                            ";}
+                        }else{
 
                                 echo    "
-                                <script type='text/javascript' language='javascript'>
-                                function ".$cardname."() {
-                                    var ele = document.getElementById(".$farm['id'].");
-                                    if(ele.style.display == 'block') {
-                                            ele.style.display = 'none';
-                                      }
-                                    else {
-                                        ele.style.display = 'block';
-                                    }
-                                }
-                                </script>
-                                        <div class='card' value='Show-Hide' onclick='return ".$cardname."();'>
-                                            <div class='card-body'>
-                                                <div class='d-inline-block'>
-                                                   
-                                                    <h2 class='mb-0'>".$farm['name']."</h2>
-                                                </div>
-                                                <div class='float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1'>
-                                                    <i class='fa fa-eye fa-fw fa-sm text-info'></i>
-                                                </div>
-                                                <div id='".$farm['id']."' style='display:none;'>
-                                               
+                                
                                                 <table class='table table-hover'>
                                                     <thead>
                                                         <tr>

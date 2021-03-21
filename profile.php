@@ -56,18 +56,7 @@ $execute=new dbFunction();
                                             </div>
                                         </div> -->
                                         <div class="form-row">
-                                            <!-- <table>
-                                                <tr>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-
-                                                </tr> -->
+                                            
                                                 <style>
                                                     #edit{
                                                         margin-left:200px;
@@ -77,7 +66,7 @@ $execute=new dbFunction();
                                                     }
                                                 </style>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                            <label for="validationCustom04">Firstname</label><strong> <?php echo $user_data[0]['first_name'];?></strong>
+                                            <label for="validationCustom04">Firstname:</label><strong> <?php echo $user_data[0]['first_name'];?></strong>
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                 <label for="validationCustom04">Lastname:</label><strong> <?php echo $user_data[0]['last_name'];?></strong>
@@ -86,18 +75,18 @@ $execute=new dbFunction();
                                             <label for="validationCustom04">Username:</label><strong> <?php echo $user_data[0]['user_name'];?></strong>
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                <label for="validationCustom04">Email</label><strong> <?php echo $user_data[0]['email'];?></strong>
+                                                <label for="validationCustom04">Email:</label><strong> <?php echo $user_data[0]['email'];?></strong>
                                                
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                            <label for="validationCustom04">Residence</label><strong> <?php echo $user_data[0]['residence'];?></strong>
+                                            <label for="validationCustom04">Residence:</label><strong> <?php echo $user_data[0]['residence'];?></strong>
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                <label for="validationCustom04">Phone</label><strong><?php echo $user_data[0]['phone_number'];?></strong>
+                                                <label for="validationCustom04">Phone:</label><strong><?php echo $user_data[0]['phone_number'];?></strong>
                                                
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                            <label for="validationCustom04">County</label><strong> <?php echo $user_data[0]['county'];?></strong>
+                                            <label for="validationCustom04">County:</label><strong> <?php echo $user_data[0]['county'];?></strong>
                                             </div>
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                 <label for="validationCustom04">Password:</label><strong> <?php echo "***********";?></strong>

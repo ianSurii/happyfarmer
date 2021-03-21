@@ -117,7 +117,7 @@ $user_id=$_SESSION['user_id'];
                               ?></h1>
 
                               <br>
-                              </br>
+                              </br> 
                                         </div>
                                        
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">

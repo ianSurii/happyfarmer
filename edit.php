@@ -3,7 +3,7 @@ include('classes/DbFunctions.php');
 
 
 
-
+$conf = "if(confirm('Please confirm you want to update profile')){ return true;}else{return false;}";
 $execute=new dbFunction();
 if(isset($_POST['update'])){
     extract($_POST);
@@ -99,7 +99,7 @@ if(isset($_POST['update'])){
                                              </div> -->
                                             
                                          </div>
-                                         <button type="submit" class="btn btn-danger btn-lg btn-block" name="update">UPDATE</button>
+                                         <button  onClick="<?php echo $conf ?>"type="submit" class="btn btn-danger btn-lg btn-block" name="update">UPDATE</button>
                                      </form>
     </div>
                                      <?php
