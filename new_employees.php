@@ -174,7 +174,7 @@ if(isset($_POST['add_employee'])){
                                             
                                          </div>
                                          
-                                         <button type="submit" class="btn btn-danger btn-lg btn-block" name="add_employee">CREATE</button>
+                                         <button type="submit" class="btn btn-danger btn-lg btn-block" name="add_employee">ADD</button>
                                      </form>
     </div>
                                      <?php

@@ -68,6 +68,17 @@
     <script src="assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
     <script src="assets/vendor/charts/c3charts/C3chartjs.js"></script>
     <script src="assets/libs/js/dashboard-ecommerce.js"></script>
+    <script src="assets/assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script src="assets/assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/assets/js/jquery.bootstrap.js" type="text/javascript">
+</script>
+
+<!--  Plugin for the Wizard -->
+<script src="assets/assets/js/material-bootstrap-wizard.js"></script>
+
+<!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->
+<script src="assets/assets/js/jquery.validate.min.js"></script>
+<
 </body>
  
 </html>

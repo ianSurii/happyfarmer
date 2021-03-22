@@ -134,6 +134,15 @@ if(isset($_POST['add_to_farm'])){
                                                          
                                                    
                                                  ?>
+                                               <script type="text/javascript">
+    $("#c_code").change(function () {
+        $("#calendar_id").load('choice.php?tag=const&id=' + $(this).val());
+    });
+    
+    $("#county").change(function () {
+        $("#constituency").load('choice.php?tag=constituency&id3=' + $(this).val());
+    });
+</script>
                                              </select>
                                                  <div class="invalid-feedback">
                                                      Please provide a valid Email.

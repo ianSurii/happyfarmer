@@ -998,7 +998,7 @@ Borders
 }
 
 .text-muted {
-    color: #7171a6 !important;
+    color: #131316 !important;
 }
 
 .rating-color {
@@ -1238,13 +1238,16 @@ Top Header
     line-height: inherit;
     white-space: nowrap;
     padding: 11px 20px;
-    font-size: 30px;
-    text-transform: uppercase;
+    font-size: 20px;
+    font-family:sans-serif;
+    /* text-transform: uppercase; */
     font-weight: 700;
-    color: #007bff;
+    background-color: #00DF70;
+    color: #dce3e9;
+    /* #007BFF #00DF70 */
 }
 .navbar-brand:hover{
-    color: #007bff;
+    color: white;
 }
 .navbar-right-top {}
 
@@ -1567,7 +1570,7 @@ Top Header
    font-size: 13px;
     padding: 9px 30px 9px 20px;
     margin-bottom: 2px;
-    color: #71789e;
+    color: #131316;
     transition: 0.3s;
     margin: 6px 1px;
 }
@@ -1639,7 +1642,7 @@ Left Navigation Sidebar
 
 .nav-left-sidebar {
     position: fixed;
-    width: 264px;
+    width: 251px;
     height: 100%;
     top: 60px;
     overflow: auto;
@@ -1693,7 +1696,7 @@ Left Navigation Sidebar
     font-size: 14px;
     padding: 12px;
     /* margin-bottom: 2px; */
-    color: #71789e;
+    color: #131316;
     transition: 0.3s;
 }
 
@@ -1717,7 +1720,7 @@ Left Navigation Sidebar
     padding-left: 12px;
     padding-right: 12px;
     /* margin-top: 5px; */
-    background: #24274a;
+    background: #131316;
 }
 
 .nav-left-sidebar .submenu .nav .nav-item .nav-link {
@@ -1729,19 +1732,19 @@ Left Navigation Sidebar
 .nav-left-sidebar .navbar-nav .nav-link:focus,
 .nav-left-sidebar .navbar-nav .nav-link.active {
     background-color: #e2e2eb;
-    color: #3d405c;
+    color: #131316;
     border-radius: 2px;
 }
 
 .nav-left-sidebar .navbar-nav .nav-link:focus,
 .nav-left-sidebar .navbar-nav .nav-link:hover {
     background-color: #e2e2eb;
-    color: #3d405c;
+    color: #131316;
     border-radius: 2px;
 }
 
 .nav-left-sidebar .submenu .nav .nav-item .nav-link:hover {
-    color: #3d405c;
+    color: #131316;
     border-radius: 2px;
     background-color: transparent;
 }
@@ -1805,38 +1808,38 @@ Leftsidebar - dark
 ------------------------- */
 
 .sidebar-dark {
-    background-color: #096b42;
+    background-color: #00DF70;
     -webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
     box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
     -webkit-transition: all 0.3s ease;
 }
 
 .sidebar-dark .nav-divider {
-    color: #a4aadb;
+    color: #131316;
     font-size: 12px;
     letter-spacing: 1px;
 }
 
 .sidebar-dark.nav-left-sidebar .nav-link i {
-    color: #7a80b4;
+    color: #131316;
 }
 
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-item {}
 
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-link {
-    color: #7a80b4;
+    color: #131316;
 }
 
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-link:focus,
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-link:hover {
     color: #fff;
-    background-color: #096b42;
+    background-color: #00DF70;
     border-radius: 2px;
 }
 
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-link:focus,
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-link.active {
-    background-color: #096b42;
+    background-color: #00DF70;
     color: #fff;
     border-radius: 2px;
 }
@@ -1844,7 +1847,7 @@ Leftsidebar - dark
 .sidebar-dark.nav-left-sidebar .submenu .nav .nav-item .nav-link:hover {
     color: #fff;
     border-radius: 2px;
-    background-color: #096b42;
+    background-color: #00DF70;
 }
 
 .sidebar-dark.nav-left-sidebar .navbar-nav .nav-item .badge{
@@ -2730,15 +2733,15 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 
 .btn-success:hover {
     color: #fff;
-    background-color: #21ae41;
-    border-color: #21ae41;
+    background-color: #00DF70;
+    border-color: #00DF70;
 }
 
 .btn-success.focus,
 .btn-success:focus {
     color: #fff;
-    background-color: #21ae41;
-    border-color: #21ae41;
+    background-color: #00DF70;
+    border-color: #00DF70;
     box-shadow: 0 0 0 1px rgb(18, 158, 50);
 }
 
@@ -2746,8 +2749,8 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 .btn-success:not(:disabled):not(.disabled):active,
 .show>.btn-success.dropdown-toggle {
     color: #fff;
-    background-color: #21ae41;
-    border-color: #21ae41;
+    background-color: #00DF70;
+    border-color: #00DF70;
 }
 
 
@@ -3062,7 +3065,7 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 /*--- btn outline light --*/
 
 .btn-outline-light {
-    color: #7171a6;
+    color: #131316;
     background-color: transparent;
     border-color: #e6e6f2;
 }
@@ -4032,13 +4035,13 @@ Pills vertical
 }
 
 .badge-success {
-    background-color: #21ae41;
+    background-color: #00DF70;
 }
 
 .badge-success[href]:focus,
 .badge-success[href]:hover {
     color: #fff;
-    background-color: #21ae41;
+    background-color: #00DF70;
     text-decoration: none;
 }
 

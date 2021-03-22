@@ -14,7 +14,7 @@ switch ($_GET['tag']) {
             echo '<option value="0">Select Variety---</option>';
             foreach ($data as $p) {
                 if ($p['variety'] != '') {
-                    echo "<option value='". $p['id'] . "'>" . $p['id'] . "</option>";
+                    echo "<option value='". $p['id'] . "'>" . $p['variety'] . "</option>";
                 } else {
                     echo '<option value="0">Unavailable</option>';
                 }
@@ -39,22 +39,21 @@ switch ($_GET['tag']) {
         }
         break;
 
-    // case 'customer_product':
-    //     require_once('classes/Customers.class.php');
-    //     $customers = new Customers();
+    case 'constituency':
+        $id=$_GET['id3'];
 
-    //     $data = $customers -> getCustomer_Products($_GET['id'],  $_SESSION['UID']);
-    //     if(count($data) == 0){
-    //         echo '<option value="0">No Product Mapped to user category</option>';
-    //     }else{
-    //         foreach($data as $p){
-    //             if($p['PR_ID'] !=''){
-    //                 echo '<option value="'.$p['PR_ID'].'">' . $p['PR_NAME'] . '</option>';
-    //             }else{
-    //                 echo '<option value="0">No Product Mapped to user category</option>';
-    //             }
-    //         }
-    //     }
-    //     break;
+        $data =$execute->select('consituencies' ,"where C_CODE='1'");
+        if(count($data)== 0){
+            echo '<option value="0">No constituencies Mapped to County</option>';
+        }else{
+            foreach($data as $p){
+                if($p[''] !=''){
+                    echo '<option value="'.$p['CY_CODE'].'">' . $p['CY_NAME'] . '</option>';
+                }else{
+                    echo '<option value="0">No Product Mapped to user category</option>';
+                }
+            }
+        }
+        break;
 }
 ?>

@@ -153,22 +153,63 @@ $user_id=$_SESSION['user_id'];
                             
                         <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
                                 <div class="card">
-                                    <h5 class="card-header">Recent Orders</h5>
+                                    <h5 class="card-header">Active Calendars</h5>
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-                                                        <th class="border-0">#</th>
-                                                        <th class="border-0">Image</th>
-                                                        <th class="border-0">Product Name</th>
-                                                        <th class="border-0">Product Id</th>
-                                                        <th class="border-0">Quantity</th>
-                                                        <th class="border-0">Price</th>
-                                                        <th class="border-0">Order Time</th>
-                                                        <th class="border-0">Customer</th>
+                                                        <th class="border-0">Name</th>
+                                                        <th class="border-0">Crop</th>
+                                                        <th class="border-0">Farm</th>
                                                         <th class="border-0">Status</th>
+                                                        <th class="border-0">Progress</th>
+                                                        <th class="border-0">Start</th>
+                                                        <th class="border-0">End</th>
+                                                        <!-- <th class="border-0">Customer</th>
+                                                        <th class="border-0">Status</th> -->
                                                     </tr>
+                                                    
+                                                        <?php
+                                                        $username=$_SESSION['username'];
+                                                        
+                                                        $calendars=$execute->select("farmer_calendars","where user_name='$username' && calendar_end_date>CURRENT_DATE");
+                                                        if($calendars==true){
+                                                            foreach($calendars as $calendar){
+                                                               
+
+                                                                $id=$calendar['calendar_id'];
+                                                                $farm_id=$calendar['farm_id'];
+                                                                $farm=$execute->select("farms","where id='$farm_id'");
+                                                                $crop=$execute->select("farm_calendars","where id='$id'");
+                                                                $value=$calendar['status'];
+                                                                $user_id=$_SESSION['user_id'];
+                                                                
+                                                                $calendar_id=$calendar['calendar_id'];
+                                                                $count_task=$execute->conditionSelect("count(id) as task","task where calendar_id='$calendar_id'");
+                                                                $count_completed_task=$execute->conditionSelect("count(task_id) as tasks","task_completion where calendar_id='$calendar_id' && user_id='$user_id' && id='$farm_id'");
+                                                                // percentage
+                                                                $progrees=($count_task[0]['task']*$count_completed_task[0]['tasks'])/100;
+                                                                if($value==1){
+                                                                    $status=" <span class='mr-2'> <span class='badge-dot badge-success'></span></span>";
+                                                                }else{
+                                                                    $status=" <span class='mr-2'> <span class='badge-dot badge-danger'></span></span>";
+                                                                }
+                                                                echo"
+                                                                <tr  class='border-0'>
+                                                        <th class='border-0'>".$calendar['calendar_name']."</th>
+                                                        <th class='border-0'>".$crop[0]['crop']."</th>
+                                                        <th class='border-0'>".$farm[0]['name']."</th>
+                                                        <th class='border-0'>".$status."</th>
+                                                        <th class='border-0'><div class='progress'>
+                                                        <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='".$progrees."' aria-valuemin='0' aria-valuemax='100' style='width:".$progrees."%'></div>
+                                                    </div></th>
+                                                        <th class='border-0'>".$calendar['calendar_start_date']."</th>
+                                                        <th class='border-0'>".$calendar['calendar_end_date']." </th>
+                                                        
+                                                    </tr>";
+                                                            }}
+                                                            ?>
                                                 </thead>
                                                 <tbody>
                                                    

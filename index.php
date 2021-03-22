@@ -4,8 +4,11 @@ include('classes/DbFunctions.php');
 $execute=new dbFunction();
 $first_name_err=$last_name_err=$username_err=$email_err=$password_err=$cpassword_err=$residence_err=$phone_err="";
 $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="";
+$login_pass_err=$login_username_err=$login_username=$login_password="";
    if(isset($_POST['register'])) {
     extract($_POST);
+    $check_username=$execute->select("user_records","WHERE user_name='$username'");
+    $check_email=$execute->select("user_records","WHERE  email='$email'");
     if(empty(trim($first_name))){
         $first_name_err="Name can not be blank";
     }else{
@@ -19,12 +22,18 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
     }
     if(empty(trim($email))){
         $email_err="Username can not be blank";
+    }elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $email_err="Enter Valid email";
+    }elseif($check_email==true){
+        $email_err="Email already used";
     }else{
         $email=trim($email);
     }
     
     if(empty(trim($username))){
         $username_err="Username can not be blank";
+    }elseif($check_username==true){
+        $username_err="Username is not available";
     }else{
         $username=trim($username);
     }
@@ -51,8 +60,11 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
         $residence=trim($residence);
     }
     if(empty(trim($phone))){
-        $phone_err="Please enter valid username";
+        $phone_err="Please enter valid Phone ";
     }elseif(strlen(trim($phone))<10){
+        $phone_err="Enter Valid phone number 0712345678";
+
+    }elseif(strlen(trim($phone))>10){
         $phone_err="Enter Valid phone number 0712345678";
 
     }else{
@@ -64,29 +76,44 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
     if(empty($first_name_err) && empty($last_name_err)&& empty($username_err) && empty($email_err)&& empty($password_err) && empty($cpassword_err)&& empty($residence_err) && empty($phone_err)){
     $encrypted_password=md5($password);
     // Full texts 	id 	first_name 	last_name 	user_name 	email 	password 	residence 	user_type 	phone_number 	country 
-    $check=$execute->select("user_records","WHERE user_name='$username' or email='$email'");
-    if ($check==false) {
+    
+    
         $register=$execute->insert("user_records","first_name,last_name,user_name,email,`password`,residence,user_type,phone_number,county ","'$first_name','$last_name','$username','$email','$encrypted_password','$residence','001','$phone','Kenya'");
         if($register==true){
+            unset($_POST['register']);
             $_SESSION['username']=$username;
-            
-            header('Location:worker.php');
+          
+            mysqli_close($execute);
+            header('Location:index.php');
+
         }
         else{
-            echo "<script>window.alert('Please fill the form and try again')</script>";
+            // echo "<script>window.alert('Please fill the form and try again')</script>";
         }
     
       
-    }else{
-        echo "<script>window.alert('Please fill the form and try again.Password must equal Cornfirm password')</script>"; 
-    }
-}
-    }else{
-        echo "<script>window.alert('Please fill the form and try again')</script>"; 
-    }
     
+}}
+        // }else{
+        //     echo "<script>window.alert('Please fill the form and try again')</script>"; 
+        // }
+        
     if(isset($_POST['login'])){
         extract($_POST);
+        if(empty(trim($user_name))){
+            $login_username_err="Enter Username";
+        }else{
+            $login_username=trim($username);
+            
+
+        }
+        if(empty(trim($userpassword))){
+            $login_pass_err="Enter Passoword";
+        }else{
+            $login_password=trim($userpassword);
+            
+        }
+        if(empty($login_pass_err) && empty($login_username_err)){
         $encry_password=md5($userpassword);
         $login=$execute->select("`user_records`" ,"WHERE user_name='$user_name' && `password`='$encry_password'");
         // $usertype=$execute->select("user_records `","WHERE user_name='$user_name' && `password`='$encry_password'");
@@ -115,9 +142,8 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
           }
 
         }
-        else{
-            echo "<script>window.alert('Invalid Credentials')</script>"; 
-        }
+    }
+        
 
     }
 
@@ -174,7 +200,7 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
                                          <div class="form-row">
                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                  <label for="validationCustom03">First Name</label>
-                                                 <input type="text" class="form-control" required="" name="first_name" id="validationCustom03" placeholder="John" value=" <?php echo $first_name;?>" required="">
+                                                 <input type="text" class="form-control" required="" name="first_name" id="validationCustom03" placeholder="John" value="<?php echo $first_name;?>" required="">
                                                                  <div class="text-danger" >
                                                                      <?php echo $first_name_err;?>
                                                  
@@ -182,14 +208,14 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
                                              </div>
                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                  <label for="">Last Name</label>
-                                                 <input type="text" class="form-control" required="" name="last_name" id="" value=" <?php echo $last_name;?>" placeholder="Doe" required>
+                                                 <input type="text" class="form-control" required="" name="last_name" id="" value="<?php echo $last_name;?>" placeholder="Doe" required>
                                                  <div class="text-danger" >
                                                  <?php echo $last_name_err;?>
                                                  </div>
                                              </div>
                                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
                                                  <label for="validationCustom03">Username</label>
-                                                 <input type="text" class="form-control" required="" name="username" id="validationCustom03" placeholder="JohnDoe" value=" <?php echo $username;?>" required>
+                                                 <input type="text" class="form-control" required="" name="username" id="validationCustom03" placeholder="JohnDoe" value="<?php echo $username;?>" required>
                                                  <div class="text-danger" >
                                                  <?php echo $username_err;?>
                                                  </div>
@@ -201,24 +227,35 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
                                                  <?php echo $email_err;?>
                                                  </div>
                                              </div>
-                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom03">Residence</label>
-                                                 <input type="text" class="form-control" required="" name="residence" class="form-control" id="validationCustom03" placeholder="Meru,Mitunguu" value=" <?php echo $residence;?>" required>
-                                                 <div class="text-danger" >
-                                                 <?php echo $residence_err;?>
-                                                 </div>
-                                             </div>
+                                            
                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                  <label for="validationCustom04">Phone</label>
-                                                 <input type="tel" class="form-control" required="" name="phone" id="validationCustom04" placeholder="Phone" value=" <?php echo $phone;?>" required>
+                                                 <input type="tel" class="form-control" required="" name="phone" id="validationCustom04" placeholder="Phone" value="<?php echo $phone;?>" required>
                                                  <div class="text-danger" >
                                                   <?php echo $phone_err;?>
                                                  </div>
                                              </div>
+                                           
+                                           
+
+
+
+                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                                 <label for="validationCustom04">Residence</label>
+                                                 <input type="tel" class="form-control" required="" name="phone" id="validationCustom04" placeholder="Phone" value="<?php echo $phone;?>" required>
+                                                 <div class="text-danger" >
+                                                  <?php echo $residence_err;?>
+                                                 </div>
+                                             </div>
+
+
+<!-- 
+</div>
+<div class="row"> -->
                                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
                                                  <!-- //data-parsley-pattern="/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/" -->
                                                  <label for="validationCustom03">Password</label>
-                                                 <input type="password" id="pass"class="form-control" required="" data-parsley-minlength="6" value=" <?php echo $password;?>" name="password" placeholder="********" >
+                                                 <input type="password" id="pass"class="form-control" required="" data-parsley-minlength="6" value="<?php echo $password;?>" name="password" placeholder="********" >
                                                  <div>
                                                  <?php echo $password_err;?>
                                                  </div>
@@ -257,15 +294,21 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
                                 <div class="card-body">
                                 <form method="POST" action="" >
                                                   <div class="form-group">
-                                                      <input class="form-control form-control-lg" id="username" name="user_name" type="text" placeholder="Username" required autocomplete="off">
+                                                      <input class="form-control form-control-lg" id="username" name="user_name" type="text" value="<?php echo $login_username;?>"  required autocomplete="off">
                                                   </div>
                                                   <div class="form-group">
-                                                      <input class="form-control form-control-lg" id="password" name="userpassword" type="password" placeholder="Password">
+                                                      <input class="form-control form-control-lg" id="password" name="userpassword" value="<?php echo $login_password;?>" type="password" >
+                                                      <div class="text-danger" >
+                                                 <?php echo $login_username_err;?>
+                                                 </div>
                                                   </div>
                                                   <div class="form-group">
                                                       <label class="custom-control custom-checkbox">
                                                           <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
                                                       </label>
+                                                      <div class="text-danger" >
+                                                 <?php echo $login_pass_err;?>
+                                                 </div>
                                                   </div>
                                                   <button type="submit" class="btn btn-success btn-lg btn-block" name="login">Sign in</button>
                                         </form>
@@ -281,6 +324,7 @@ $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="
                                     </div>
                                 </div>
                             </div>
+                            
 <?php
 include 'includes/footer.php';
 ?>
