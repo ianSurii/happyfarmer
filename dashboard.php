@@ -3,7 +3,7 @@ include 'classes/DbFunctions.php';
 $execute=new dbFunction();
 if(isset($_GET['user'])){
   $_SESSION['username']="Itadmin";
-    $_SESSION['usertype']="111";
+    $_SESSION['usertype']="11";
       $_SESSION['user_id']="204";
     }
 include 'includes/header.inc';
