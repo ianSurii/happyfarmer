@@ -43,7 +43,7 @@
                                 <a class='nav-link fa fa-fw fa-calendar-alt' href='reports.php'>Reports</a>
                                 </li>
                                  <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-gift' href='inventory.php'>Invetory</a>
+                                <a class='nav-link fa fa-fw fa-gift' href='inventory.php'>Inventory</a>
                                 </li>";
 
                             }elseif($usertype==111){
