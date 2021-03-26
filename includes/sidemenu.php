@@ -48,7 +48,7 @@
 
                             }elseif($usertype==111){
                                 echo" <li class='nav-item'>
-                                <a class='nav-link fas fa-square-full' href='admin.php'>Dashboard</a>
+                                <a class='nav-link fas fa-square-full' href='dashoard.php'>Dashboard</a>
                                 </li>
                                 <li class='nav-item'>
                                 <a class='nav-link fas fa-tree' href='crops.php'>Crops</a>
