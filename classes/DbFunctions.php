@@ -72,7 +72,7 @@ return $data;
 function delete($table ,$condition){
     $data=array();
     //otherformart: SELECT Count(*) AS DistinctCountries FROM (SELECT DISTINCT Country FROM Customers);
-    $query="DELETE FROM ".$table."".$condition.";";
+    $query="DELETE FROM ".$table." ".$condition.";";
     $result=$this->db->query($query)  or die($this->db->error);
    if($result){
        return true;

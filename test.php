@@ -1,26 +1,10 @@
 <?php
+$current_date = date("2021-04-05");
 
-if(isset($_POST['send'])){
-   extract($_POST);
-    $email="17g01abt017@anu.ac.ke";
-   $subject = "Close Garage";
-   $message = "Hello ian,\n\nVerify that you own iansurii.\n\nYou may be asked to enter this confirmation code:\n\n0000\n\nRegards,\nClose Garage.";
-   $from = "support@androidlearning.in";
-   $headers = "From: happyfarmer@mail.com" ;
+echo $current_date;
 
-   mail($email,$subject,$message,$headers);
 
-   $response["error"] = FALSE;
-   $response["message"] = "Register successful!";
-   echo json_encode($response);
+$task_deadline=date('Y-m-d', strtotime($current_date .'+6 day'));
    
-}
-
- ?>
- <form method="POST" action="">
-
- 
-     
-
- <button type="submit" name="send">Send</button>>
- </form>
+ echo $task_deadline ;
+?>

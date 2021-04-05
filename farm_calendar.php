@@ -28,6 +28,34 @@ if(isset($_POST['add_to_farm'])){
                         $column="calendar_id,calendar_name,calendar_start_date,calendar_end_date,status,farm_id,user_name";
                         $values="'$calendar_id','$calendar_name','$start_date','$end_date','1','$farm','$username'";
                         $addToFarm=$execute->insert($table,$column,$values);
+                        if($addToFarm==true){
+                            $all_tasks=$execute->select("task","where calendar_id='$calendar_id'");
+                            if($all_tasks==true){
+                           foreach ($all_tasks as $task) {
+                            $user_id=$_SESSION['user_id'];
+                            $task_id=$task['id'];
+                            $week=$task['week'];
+                            $days=($week*7)-1;
+                            $current_date = date("Y-m-d"); //existing date
+                            $task_deadline=date('Y-m-d', strtotime($start_date .'+'.$days.'days'));
+                            // echo date('Y-m-d', strtotime($date .'+1 day'));
+                            $task_start_date=date("Y-m-d",strtotime($task_deadline."-6 days"));
+                               $table="task_completion";
+                            //    date is for start date ,which is 
+                               $column="calendar_id,task_id,user_id,completed,date,calendar_end_date,farm_id";
+                               $values="'$calendar_id','$task_id','$user_id','0','$task_start_date','$task_deadline','$farm'";
+
+                            $insert_farm_task=$execute->insert($table,$column,$values);
+                           }
+                            
+                           }else{
+                            echo "<script>window.alert('Failed TERRIBLY')</script>";
+                               
+                           }
+                           
+                            
+                        }
+
                         
                         
                     }
