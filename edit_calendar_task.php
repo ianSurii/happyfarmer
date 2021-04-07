@@ -8,7 +8,12 @@ include 'includes/sidemenu.php';
 
 $execute=new dbFunction();
 
-
+if(isset($_GET['activity_id'])){
+    extract($_GET);
+    $delete=$execute->delete("activity","where id='$activity_id'");
+    header('Location:view_calendars.phps');
+  
+}
    
 
    if(isset($_SESSION['username'])) {
@@ -116,6 +121,7 @@ $execute=new dbFunction();
                                             $activities=$execute->select("activity","where task_id='$task_id'");
                                             if($activities==true){
                                             foreach($activities as $activity){
+                                                $id=$activity['id'];
                                                   echo"
                                            <tr>
                                                <th scope='row'>".$activity['id']."</th>
@@ -123,8 +129,8 @@ $execute=new dbFunction();
                                                <td>".$select_task[0]['calendar_id']."</td>
                                                <td>".$activity['activity']."</td>
                                                <td>".$activity['estimated_time']."</td>
-                                               <td ><a class='badge badge-info' href='edit_calendar_task.php?activity_id='".$activity['estimated_time']."'><span class='fas fa-pencil-alt'></span></a>
-                                               <a class='badge badge-info' href='edit_calendar_task.php?activity_id='".$activity['estimated_time']."'><span class='fas fa-trash-alt'></span></a>
+                                               <td ><a class='badge badge-info' href='?activity_id='".$activity['estimated_time']."'><span class='fas fa-pencil-alt'></span></a></br>
+                                               <a class='badge badge-info' href='?activity_id='".$id."'><span class='fas fa-trash-alt'></span></a>
                                                <input type='checkbox'></input>
                                                </td>
                                                

@@ -66,17 +66,18 @@ $execute=new dbFunction();
                                             <tr>
 
 <!-- Full texts 	calendar_id	task_title	week	id -->
-                                                <th scope="col">#</th>
-                                                <th scope="col">Calendar</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Week</th>
-                                                <th scope="col">Edit</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                                foreach($tasks as $task){
                                                    echo"
+                                                   <th scope='col'>#</th>
+                                                   <th scope='col'>Calendar</th>
+                                                   <th scope='col'>Title</th>
+                                                   <th scope='col'>Week</th>
+                                                   <th scope='col'>Edit</th>
                                             <tr>
                                                 <th scope='row'>".$task['id']."</th>
                                                 <td>".$task['calendar_id']."</td>

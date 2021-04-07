@@ -7,6 +7,19 @@ $execute=new dbFunction();
 
 $user_id=$_SESSION['user_id'];
 
+if(isset($_POST['assign'])){
+    extract($_POST);
+    $column="activity_id,status,user_id,calendar_id,task_id";
+
+    $values="$activity_id,'0','$user_id','$calendar_id','$task_id'";
+
+    $assigning=$execute->insert("activity_assigned",$calumn,$values);
+    if($assigning==true){
+        echo "<script>window.alert('success')</script>";
+        mysqli_close($db);
+    }
+
+}
 ?>
 <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
@@ -187,7 +200,7 @@ $user_id=$_SESSION['user_id'];
                                                                 $user_id=$_SESSION['user_id'];
 
                                                                 $task=$execute->conditionSelect("count(id) as task","task where calendar_id='$calendar_id'");
-                                                                $task_completed=$execute->conditionSelect("count(task_id) as task","task_completion where calendar_id='$calendar_id' && user_id='$user_id' && farm_id='$farm_id' && calendar_end_date='$calendar_end_date' && completed='1'");
+                                                                $task_completed=$execute->conditionSelect("count(task_id) as task","task_completion where calendar_id='$calendar_id' && user_id='$user_id' && farm_id='$farm_id' && completed='1'");
                                                                 $complted=$task_completed[0]['task'];
                                                                 $total_tasks=$task[0]['task'];
                                                             
@@ -210,9 +223,9 @@ $user_id=$_SESSION['user_id'];
                                                         <th class='border-0'>".$farm[0]['name']."</th>
                                                         <th class='border-0'>".$status."</th>
                                                         <th class='border-0'><div class='progress'>
-                                                        <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='".$progrees."' aria-valuemin='0' aria-valuemax='100' style='width:'".$progrees."%'></div>
+                                                        <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='".ceil($progrees)."' aria-valuemin='0' aria-valuemax='100' style='width:".ceil($progrees)."%'></div>
                                                     </div>
-                                                    ".$progrees."% Completed</th>
+                                                    ".ceil($progrees)."% Completed</th>
                                                         <th class='border-0'>".$calendar['calendar_start_date']."</th>
                                                         <th class='border-0'>".$calendar['calendar_end_date']." </th>
                                                         <th  class='btn btn-outline-danger' scope='col'><div><a href='view_calendar.php'><span class='fas fa-eye'></span></a></div></th>
@@ -229,29 +242,32 @@ $user_id=$_SESSION['user_id'];
                                 </div>
                             </div>
 
+<?php
+$user_id=$_SESSION['user_id'];
+
+$count_task_due_this_week=$execute->conditionSelect('count(task_id) as task'," task_completion where user_id='$user_id'
+&& `date`<=CURRENT_DATE && calendar_end_date>=CURRENT_DATE && completed=0 && calendar_end_date>CURRENT_DATE");
+if($count_task_due_this_week==true){
 
 
-                            <h1>Activities Due this Week</h1>
+                           echo"<div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                           
+                           <h3 class='bg-success    '>TOTAL TASK DUE THIS WEEK ".$count_task_due_this_week[0]['task']."</h3>
+                           </div>";
+}else{
+    echo"<div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                           
+    <h3 class='bg-success    '>NOTHING IS FUE THIS WEEK </h3>
+    </div>";
+}
+                            ?>
 
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="card">
                                     <h5 class="card-header">Activities</h5>
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
-                                            <table class="table">
-                                                <thead class="bg-light">
-                                                    <tr class="border-0">
-                                                        <th class="border-0">Name</th>
-                                                        <th class="border-0">Crop</th>
-                                                        <th class="border-0">Farm</th>
-                                                        <th class="border-0">Status</th>
-                                                        <th class="border-0">Progress</th>
-                                                        <th class="border-0">Start</th>
-                                                        <th class="border-0">End</th>
-                                                        <th class="border-0">View</th>
-                                                        <!-- <th class="border-0">Customer</th>
-                                                        <th class="border-0">Status</th> -->
-                                                    </tr>
+                                           
                                                     
                                                         <?php
                                                         $username=$_SESSION['username'];
@@ -262,8 +278,9 @@ $user_id=$_SESSION['user_id'];
                                                                
                                                                 $calendar_end_date=$calendar['calendar_end_date'];
                                                                 $calendar_id=$calendar['calendar_id'];
+                                                                $calendar_tb_id=$calendar['id'];
                                                                 $calendar_start_date=$calendar['calendar_start_date'];
-                                                                // $farm_id=$calendar['farm_id'];
+                                                                $farm_id=$calendar['farm_id'];
                                                                 $all_tasks=$execute->select("task","where calendar_id='$calendar_id'");
                                                                     if($all_tasks==true){
                                                                 foreach($all_tasks as $task){
@@ -275,20 +292,115 @@ $user_id=$_SESSION['user_id'];
 
                                                                     if($tasks_due==true){
                                                                         foreach($tasks_due as $task_due){
-                                                                        echo"
-                                                                        <tr  class='border-0'>
-                                                                <th class='border-0'>".$task_due['calendar_id']."</th>
-                                                                <th class='border-0'>".$task_due['task_id']."</th>
-                                                                <th class='border-0'>".$task['week']."</th>
-                                                                <th class='border-0'>".$task_due['calendar_end_date']."</th>
-                                                                <th class='border-0'><div class='progress'>
-                                                                <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='70' aria-valuemin='0' aria-valuemax='100' style='width:70'></div>
-                                                            </div>
-                                                            10% Completed</th>
-                                                                <th class='border-0'>".$task['week']."</th>
+                                                                            $cardname="my".$task_due['task_id'];
+
+                                                                 echo"  
+
+                                                                 
+                                                                 
+                                                                 <script type='text/javascript' language='javascript'>
+                                                                    function ".$cardname."() {
+                                                                        var ele = document.getElementById(".$task_due['id'].");
+                                                                        if(ele.style.display == 'none') {
+                                                                                ele.style.display = 'block';
+                                                                        }
+                                                                       
+                                                                    }
+
+                                                                    </script>";
+
+                                                                    echo"<div class='card' value='Show-Hide' onclick='return ".$cardname."();'>
+                                                                    <div class='card-body'>
+                                                                        <div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                                                                           
+                                                                            <h2 class='mb-0'>Due:". strtoupper($task_due['calendar_end_date'])."</h2>
+                                                                            <div class='progress'>
+                                                                            
+                                                                            <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='70' aria-valuemin='70' aria-valuemax='100' style='width:70'></div>
+                                                                            10% Completed
+                                                                        </div>
+                                                                        </div>
+                                                                        <div class='float-right icon-circle-medium  icon-box-md  bg-danger-light mt-1'>
+                                                                            <i class='fa fa-eye fa-fw '></i>
+                                                                        </div>
+                                                                        <div id='".$task_due['id']."' style='display:none;'>";
+
+                                                        
+                                                                        
+                                                                       echo" <table class='table'>
+                                                                 <thead class='bg-light'>
+                                                                     <tr class='border-0'>
+                                                                         <th class='border-0'>Activity</th>
+                                                                         <th class='border-0'>Crop</th>
+                                                                         <th class='border-0'>Farm</th>
+                                                                         <th class='border-0'>Status</th>
+                                                                         <th class='border-0'>Progress</th>
+                                                                         <th class='border-0'>Start</th>
+                                                                         
+                                                                     </tr>
+                                                                     </th>";
+                                                                     $select_activities=$execute->select("activity","where task_id=".$task_due['task_id']."");
+                                                                     if($select_activities==true){
+                                                                         foreach($select_activities as $activity){
+                                                                             $select_farm_name=$execute->select("farms","where id='$farm_id'");
+                                                                             $select_crop=$execute->select('farm_calendars',"where id='$calendar_id'");
+                                                                             $assign_status=$execute->select('activity_assigned',"where activity_id='".$activity['id']."' && calendar_id='$calendar_tb_id' && task_id='".$task_due['task_id']."'");
+                                                                            //  if($select_farm_name==true){
+                                                                                $user_id=$_SESSION['user_id'];
+                                                                                $select_employees=$execute->select("employees","where employer='$user_id' && id='$farm_id' ");
+                                                                               
+                                                                                if( count($assign_status)==0){
+                                                                                    foreach($select_employees as $employee){
+                                                                                        $select_emp_details=$execute->conditionSelect("first_name,last_name","user_records where id='".$employee['employee_id']."'");
+                                                                                $assigned="<form method='post' action=''>
+                                                                                <input type='text' hidden='hidden' name='activity_id' value='".$activity['id']."'>
+                                                                                <input type='text' hidden='hidden' name='task_id'value='".$task_id."'>
+                                                                                <input type='text' hidden='hidden' name='calendar_id' value='".$calendar_tb_id."'>
+                                                                                             <select type='text' name='to'>
+                                                                                                <option value=".$employee['id'].">".$select_emp_details[0]['first_name']." ".$select_emp_details[0]['last_name']."</option>
+                                                                                              </select>
+                                                                                            <button type='submit' name='assign'>Asign</button>
+                                                                                             </form>   
+                                                                                          
+                                                                                                 
+                                                                                ";}                                                                                ;
+                                                                                }else{
+                                                                                    $to=$assign_status[0]['user_id'];
+                                                                                    $select_employee_name=$execute->conditionSelect("first_name,last_name","user_records where id='$to'");
+                                                                                    $assigned=$select_employee_name[0]['first_name']." ".$select_employee_name[0]['last_name'];
+                                                                                }
+                                                                                                                
+                                                                     echo"
+                                                            <tr  class='border-0'>
+                                                                <th class='border-0'>".$activity['activity']."</th>
+                                                                <th class='border-0'>".$select_crop[0]['crop']."</th>
+                                                                <th class='border-0'>".$select_farm_name[0]['name']."</th>
+                                                                <th class='border-0'>".$assigned."</th>
                                                                 <th class='border-0'>".$task['week']." </th>
                                                                 <th  class='btn btn-outline-danger' scope='col'><div><a href='view_calendar.php'><span class='fas fa-eye'></span></a></div></th>
-                                                            </tr>";}
+                                                            </tr>";
+                                                                //    } //farm name
+                                                                  }}else{
+                                                                        echo"
+                                                                        <tr  class='border-0'>
+                                                                            No Activities for this specifi task
+                                                                             </tr>";
+
+                                                                     }
+                                                            echo"
+                                                            </thead>
+                                                <tbody>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                                            </div>
+                                                           
+                                                      
+                                                            ";
+                                                        }
                                                                         }
 
                                                                     }
@@ -321,17 +433,34 @@ $user_id=$_SESSION['user_id'];
                                                             
                                                         }
                                                             ?>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                                                
                             </div>
                         </div>
                     </div>
+                    <script>
+                       let popupParent = document.querySelector(".popup-parent");
+                        let btn = document.getElementById("btn");
+                        let btnClose = document.querySelector(".close");
+                        let mainSection = document.querySelector(".mainSection");
+
+
+                        btn.addEventListener("click", showPopup);
+                            function showPopup() {
+                                popupParent.style.display = "block";
+                            }
+
+                        btnClose.addEventListener("click", closePopup);
+                            function closePopup() {
+                                popupParent.style.display = "none";
+                            }
+                        popupParent.addEventListener("click", closeOutPopup);
+                            function closeOutPopup(o) {
+                                if(o.target.className == "popup-parent"){
+                                    popupParent.style.display = "none";
+                                }
+                            }
+ 
+                    </script>
               
                  
 <?php

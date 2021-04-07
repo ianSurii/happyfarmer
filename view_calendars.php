@@ -43,47 +43,65 @@ $execute=new dbFunction();
  </div>
  
 
-<form  method="POST" action="" id="validationform" data-parsley-validate="" novalidate="">
 
 
 
 
-<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"> -->
                             <!-- <div class="card"> -->
-                               
+                            
                                 <!-- <div class="card-body"> -->
-                                    <table class="table table-hover">
+                                <?php
+                                $calendars=$execute->selectAll("farm_calendars");
+                                if($calendars==true){
+                                 
+                                  foreach($calendars as $calendar){
+                                      $cardname="mycli".$calendar['id'];
+                                      $div_id=$calendar['id'];
+                                    $calendar_id=trim($calendar_id['id']);
+                               echo"  
+                                    
+                                                                 
+                                                                 
+                               <script type='text/javascript' language='javascript'>
+                                  function ".$cardname."(){
+                                      var ele = document.getElementById(".$div_id.");
+                                      if(ele.style.display == 'block') {
+                                              ele.style.display = 'none';
+                                      }
+                                      else {
+                                          ele.style.display = 'block';
+                                      }
+                                  }
+
+                                  </script>
+                                  <div class='card' value='Show-Hide' onclick='return ".$cardname."();'>
+                                  <div class='card-body'>
+                                     
+                                         
+                                    
+                                    <table class='table table-hover'>
                                         <thead>
                                             <tr>
 
-<!-- editor	calendar_name	period	id	crop	variety	region1	region2	region3 	 -->
-                                                <th scope="col">#</th>
-                                                <th scope="col">Calendar</th>
+
+                                                <th scope='col'>#</th>
+                                                <th scope='col'>Calendar</th>
                                                 
-                                                <th scope="col">Period</th>
-                                                <th scope="col">Editor</th>
-                                                <th scope="col">Crop</th>
-                                                <th scope="col">Variety</th>
-                                                <th scope="col">Region 1</th>
-                                                <th scope="col">Region 2</th>
-                                                <th scope="col">Region 3</th>
-                                                <th scope="col">Edit</th>
+                                                <th scope='col'>Period</th>
+                                                <th scope='col'>Editor</th>
+                                                <th scope='col'>Crop</th>
+                                                <th scope='col'>Variety</th>
+                                                <th scope='col'>Region 1</th>
+                                                <th scope='col'>Region 2</th>
+                                                <th scope='col'>Region 3</th>
+                                                <th scope='col'>Edit</th>
                                             </tr>
                                         </thead>
-                                        <style>
-                                        .hide{
-
-                                                visibility: hidden
-
-                                                }
-                                        </style>
+                                       
                                         <tbody>
-                                            <?php
-                                             $calendars=$execute->selectAll("farm_calendars");
-                                             if($calendars==true){
-                                              
-                                               foreach($calendars as $calendar){
-                                                   echo"
+                                           
                                             <tr>
                                                 <th scope='row'>".$calendar['id']."</th>
                                                 <td >".$calendar['calendar_name']."</td>
@@ -96,33 +114,76 @@ $execute=new dbFunction();
                                                 <td>".$calendar['region3']."</td>
                                                 <td><a  class='badge badge-info' href='view_task.php?calendar_id=".$calendar['id']."'>Edit</a></td>
                                                 </tr>
-                                            ";
+                                            </tbody>
+                                               </table>
+                                           
+                                  
+                                               <div class='float-right icon-circle-medium  icon-box-md  bg-danger-light mt-1'>
+                                                   <i class='fa fa-eye fa-fw '></i>
+                                               </div>
+                                               <div id='".$div_id."' style='display:none;'>";
+                                               echo"
+                                               <table class='table table-hover'>
+                                                <thead>
+                                                <tr>
+                                                <th scope='col'>#</th>
+                                                <th scope='col'>Activitites</th>
+                                                <th scope='col'>Title</th>
+                                                <th scope='col'>Week</th>
+                                                <th scope='col'>Edit</th>
+                                                </tr>";
+                                             
+                                               $tasks=$execute->select("task","where calendar_id='".$calendar['id']."'");
+                                         if($tasks==true){
+                                               foreach($tasks as $task){
+                                                   $task_id=$task['id'];
+                                                   $activities=$execute->conditionSelect("count(activity) as activity","activity where task_id='".$task['id']."'");
+                                                echo"
+                                                
+                                         <tr>
+                                         
+                                             <td >".$task['week']."</td>
+                                             <td>".$activities[0]['activity']."</td>
+                                             <td>".$task['task_title']."</td>
+                                             <td>".$task['week']."</td>
+                                             <td><a  class='badge badge-danger' href='edit_calendar_task.php?task_id=".$task['id']."'>Edit</a></td>
+                                             </tr>
+                                             
+                                         ";
+                                            }
+
+                                         echo"
+                                         <thead>
+                                         </tbody>
+                                    </table>";
+                                        }else{
+                                                echo "No Task Available";
+                                            }
+
+
+
+                                              echo"
+                                               </div>
+                                               </div>
+                                               
+                                               </div>";
                                                }}else{
 
                                                 echo"
-                                                <tr class='row'><tr>
                                                 
-                                              
-                                                 <h2 class='text-danger'> Create New Calendars </h2>
-                                               </tr>
-                                                </tr>
-                                                   
-                                                    </tr>
                                                 ";
 
                                                }
+                                               
                                             ?>
                                             
-                                        </tbody>
-                                    </table>
-                                <!-- </div>
-                            </div> -->
-                        </div>
+                                        </div>
 
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
-                                     </form>
+                                     <!-- </form> -->
     </div>
                                      <?php
+                                     include 'includes/footer.php';
             
 }else{
     header('Location:index.php');
