@@ -15,8 +15,10 @@ if(isset($_POST['assign'])){
 
     $assigning=$execute->insert("activity_assigned",$calumn,$values);
     if($assigning==true){
+        header('Location:farmer.php');
         echo "<script>window.alert('success')</script>";
-        mysqli_close($db);
+        unset($_POST['assign']);
+        // mysqli_close($execute);
     }
 
 }
