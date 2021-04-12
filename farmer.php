@@ -9,17 +9,24 @@ $user_id=$_SESSION['user_id'];
 
 if(isset($_POST['assign'])){
     extract($_POST);
+    $check=$execute->select("activity_assigned","where activity_id='$activity_id' && user_id='$to' && calendar_id='$calendar_id' && status='0' &&task_id='$task_id'");
+
+if($check==false){
     $column="activity_id,status,user_id,calendar_id,task_id";
 
-    $values="$activity_id,'0','$user_id','$calendar_id','$task_id'";
+    $values="$activity_id,'0','$to','$calendar_id','$task_id'";
 
-    $assigning=$execute->insert("activity_assigned",$calumn,$values);
+    $assigning=$execute->insert("activity_assigned",$column,$values);
+    $send_message=$execute->insert("messages","to,from,message,read_status","'$to','$user_id','You have been assigned a new task','0'");
     if($assigning==true){
         header('Location:farmer.php');
         echo "<script>window.alert('success')</script>";
         unset($_POST['assign']);
         // mysqli_close($execute);
     }
+}else{
+    haader('Location:farmer.php');
+}
 
 }
 ?>
@@ -295,6 +302,7 @@ if($count_task_due_this_week==true){
                                                                     if($tasks_due==true){
                                                                         foreach($tasks_due as $task_due){
                                                                             $cardname="my".$task_due['task_id'];
+                                                                            $task_tb_id=$task_due['id'];
 
                                                                  echo"  
 
@@ -310,6 +318,20 @@ if($count_task_due_this_week==true){
                                                                     }
 
                                                                     </script>";
+                                                                    $count_task_activities=$execute->conditionSelect("count(id) as activity","activity where task_id='$task_id'");
+                                                                                $count_task_ativities_completed=$execute->conditionSelect("count(activity_id) as activity","activity_assigned where task_id='$task_id' && status='1'");
+                                                                                $pc_done=$count_task_ativities_completed[0]['activity'];
+                                                                                $all=$count_task_activities[0]['activity'];
+                                                                                $task_progress=($pc_done*100)/$all;
+                                                                                if($task_progress==100){
+                                                                                    $update_task_status=$execute->update("task_completion","SET completed='1'"," task_id='$task_id' && id='$task_tb_id'");
+                                                                                    // updateformat SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'WHERE CustomerID = 1;
+                                                                                    // $query="UPDATE ".$table." ".$setColumnValue."WHERE".$condition.";";
+                                                                                    if($update_task_status==true){
+                                                                                        echo "<script>window.alert('TASK COMPLETED')</script>";
+
+                                                                                    }
+                                                                                }
 
                                                                     echo"<div class='card' value='Show-Hide' onclick='return ".$cardname."();'>
                                                                     <div class='card-body'>
@@ -318,9 +340,9 @@ if($count_task_due_this_week==true){
                                                                             <h2 class='mb-0'>Due:". strtoupper($task_due['calendar_end_date'])."</h2>
                                                                             <div class='progress'>
                                                                             
-                                                                            <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='70' aria-valuemin='70' aria-valuemax='100' style='width:70'></div>
-                                                                            10% Completed
-                                                                        </div>
+                                                                            <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='".trim($task_progress)."' aria-valuemin='0' aria-valuemax='100%' style='width:".$task_progress."%'>  ".$task_progress."% Completed</div>
+                                                              
+                                                            </div>
                                                                         </div>
                                                                         <div class='float-right icon-circle-medium  icon-box-md  bg-danger-light mt-1'>
                                                                             <i class='fa fa-eye fa-fw '></i>
@@ -354,23 +376,33 @@ if($count_task_due_this_week==true){
                                                                                 if( count($assign_status)==0){
                                                                                     foreach($select_employees as $employee){
                                                                                         $select_emp_details=$execute->conditionSelect("first_name,last_name","user_records where id='".$employee['employee_id']."'");
+
+                                                                                $activity_completion_status="0" ;
                                                                                 $assigned="<form method='post' action=''>
                                                                                 <input type='text' hidden='hidden' name='activity_id' value='".$activity['id']."'>
                                                                                 <input type='text' hidden='hidden' name='task_id'value='".$task_id."'>
                                                                                 <input type='text' hidden='hidden' name='calendar_id' value='".$calendar_tb_id."'>
                                                                                              <select type='text' name='to'>
-                                                                                                <option value=".$employee['id'].">".$select_emp_details[0]['first_name']." ".$select_emp_details[0]['last_name']."</option>
+                                                                                                <option value=".$employee['employee_id'].">".$select_emp_details[0]['first_name']." ".$select_emp_details[0]['last_name']."</option>
                                                                                               </select>
-                                                                                            <button type='submit' name='assign'>Asign</button>
+                                                                                            <button class='badge badge-danger' type='submit' name='assign'>Asign</button>
                                                                                              </form>   
                                                                                           
                                                                                                  
                                                                                 ";}                                                                                ;
                                                                                 }else{
-                                                                                    $to=$assign_status[0]['user_id'];
-                                                                                    $select_employee_name=$execute->conditionSelect("first_name,last_name","user_records where id='$to'");
+                                                                                   
+                                                                                    $assigned_to=$assign_status[0]['user_id'];
+                                                                                    $select_employee_name=$execute->conditionSelect("first_name,last_name","user_records where id='$assigned_to'");
                                                                                     $assigned=$select_employee_name[0]['first_name']." ".$select_employee_name[0]['last_name'];
+                                                                                    if($assign_status[0]['status']==1){
+                                                                                        $activity_completion_status="100";
+                                                                                    }else{
+                                                                                        $activity_completion_status="0";
+                                                                                    }
                                                                                 }
+                                                                                
+
                                                                                                                 
                                                                      echo"
                                                             <tr  class='border-0'>
@@ -378,7 +410,11 @@ if($count_task_due_this_week==true){
                                                                 <th class='border-0'>".$select_crop[0]['crop']."</th>
                                                                 <th class='border-0'>".$select_farm_name[0]['name']."</th>
                                                                 <th class='border-0'>".$assigned."</th>
-                                                                <th class='border-0'>".$task['week']." </th>
+                                                                <th class='border-0'><div class='progress'>
+                                                                    <div clas='progress'        
+                                                                <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='".$activity_completion_status."' aria-valuemin='0' aria-valuemax='100' style='width:".$activity_completion_status."%'>".$activity_completion_status."% Completed</div>
+                                                                
+                                                            </div> </th>
                                                                 <th  class='btn btn-outline-danger' scope='col'><div><a href='view_calendar.php'><span class='fas fa-eye'></span></a></div></th>
                                                             </tr>";
                                                                 //    } //farm name

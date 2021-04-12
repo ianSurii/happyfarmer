@@ -9,7 +9,7 @@ $execute=new dbFunction();
 if(isset($_GET['delete'])){
     extract($_GET);
 
-    $delete=$execute->delete("inventory","where idinventory='$delete'");
+    $delete=$execute->delete("farmer_calendars","where id=$delete");
     unset($_POST);
 }
 
@@ -53,8 +53,8 @@ if(isset($_GET['delete'])){
                                 </style>
                                 <!-- <div class="myDIV">
                                 <a class="badge badge-secondary" href='new_employees.php'>Add Employee<span class="fas fa-calendar-plus"></span></a> </div> -->
-                                <a class="badge badge-info" href='new_inventory.php'>New Inventory<span class="fas fa-plus"></span></a> 
-                                <!-- <a class="badge badge-success" href='new_farm.php'>Add Employee<span class="fas fa-calendar-plus"></span></a> </div> -->
+                                <a class="badge badge-info" href='add_produce.php'>ADD<span class="fas fa-calendar-plus"></span></a> 
+                               
                             </div>
                            
                         
@@ -72,17 +72,29 @@ if(isset($_GET['delete'])){
 <?php
 $username=$_SESSION['username'];
 $user_id=$_SESSION['user_id'];
- $farms=$execute->select("farms","where owner='$username'");
- if($farms==true){
+
+ $farms_id=$execute->select("employees","where employee_id='$user_id'");
+ if($farms_id==true){
   
         
 
 
     
 
- foreach($farms as $farm){
-    $result = "farm".$farm['id'];
-    $id=$farm['id'];
+ foreach($farms_id as $farm){
+
+    $farm_produce=$execute->select("produce","where farm_id='".$farm['id']."'");
+    if($farm_produce==true){
+    // 
+// $select_farm_n
+        foreach($farm_produce as $produce){  
+            if($produce['status']==1){
+                $status="PAID";
+            }else{
+                $status="PENDING";
+            }
+    $result = "farm".$produce['id'];
+    $id=$produce['id'];
 
 
     $cardname=str_replace(' ', '',$result);
@@ -93,7 +105,7 @@ $user_id=$_SESSION['user_id'];
                     echo    "
                     <script type='text/javascript' language='javascript'>
                     function ".$cardname."() {
-                        var ele = document.getElementById(".$farm['id'].");
+                        var ele = document.getElementById(".$id.");
                         if(ele.style.display == 'none') {
                                 ele.style.display = 'block';
                           }
@@ -101,66 +113,62 @@ $user_id=$_SESSION['user_id'];
                     }
 
                     </script>";
+
+                   
                   
-                    echo"
+                                 echo"
                             <div class='card' value='Show-Hide' onclick='return ".$cardname."();'>
                                 <div class='card-body'>
                                     <div class='d-inline-block'>
                                        
-                                        <h2 class='mb-0'>". strtoupper($farm['name'])."</h2>
+                                        <h2 class='mb-0'>". strtoupper($produce['buyer'])."</h2>
                                     </div>
                                     <div class='float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1'>
-                                    <a href='' >new<a/>
                                         <i class='fa fa-eye fa-fw fa-sm text-info'></i>
                                     </div>
                                     
-                                    <div class='float-right mt-1 badge-success'>
-                                    <a href=''  ><span class='fas fa-plus '><span><a/>
-                                      
-                                    </div>
-                                    
-                                    <div id='".$farm['id']."' style='display:none;'>
+                                    <div id='".$id."' style='display:none;'>
                                     <table class='table table-hover'>
                                     <thead>
                                         <tr>
 
 
-                                        <th scope='col'>#</th>
-                                          
-                                        <th scope='col'>Name</th>
-                                        <th scope='col'>Quanity</th>
-                                        <th scope='col'>Cost</th>
-                                            
+                                            <th scope='col'>#</th>
+                                            <th scope='col'>Buyer</th>
+                                            <th scope='col'>Transaction</th>
+                                            <th scope='col'>Cost</th>
+                                            <th scope='col'>Status</th>
+                                            <th scope='col'>Name</th>
+                                            <th scope='col'>Contact</th>
+                                            <th scope='col'>Units</th>
+                                           
                                         
                                         </tr>
                                     </thead>
                         
                                     <tbody>";
                                 
-                                        $farm_inventory=$execute->select("inventory","where farm_id='".$farm['id']."'");
-                                        if($farm_inventory==true){
-                                        
-                                
-                                            foreach($farm_inventory as $inventory){  
-                                               
-                                           
-                                        
-                                         
-                                    echo" <tr>
-                                            <th scope='col'>".$inventory['idinventory']."</th>
-                                           
-                                            <th scope='col'>".$inventory['Name']."</th>
-                                            <th scope='col'>".$inventory['Quantity']."</th>
                                             
-                                            <th scope='col'>".$inventory['Cost']."</th>
-                                            <th  class='btn btn-outline-danger' scope='col'><div>
-                                            <a href='view_calendar.php'><span class='fas fa-eye'></span></a>
-                                            <br>
-                                            <a href='?delete=".$inventory['idinventory']."'><span class='fas fa-trash-alt'></span></a>
-                                            </div></th>
+                                    echo" <tr>
+                                                <th scope='col'>".$produce['id']."</th>
+                                            <th scope='col'>".$produce['buyer']."</th>
+                                            <th scope='col'>".$produce['trasnsaction']."</th>
+                                            <th scope='col'>".$produce['cost']."</th>
+                                            <th scope='col'>".$status."</th>
+                                            <th scope='col'>".$produce['name']."</th>
+                                            <th scope='col'>".$produce['contact']."</th>
+                                            <th scope='col'>".$produce['unit']."</th>
+                                         
+                                            
+                                            
                                                 </tr>
                                           
-                                             
+                                                </tbody>
+                                                </table>
+                                               
+                                            </div>
+                                            </div>
+                                            </div>
                                       
 
                                  ";}
@@ -169,7 +177,7 @@ $user_id=$_SESSION['user_id'];
                                     echo    "
                                     
                                                             <tr>
-                                                           No Invetory For this Farm
+                                                            Empty
                                                                 <tr>
                                                           
                                                              
@@ -188,11 +196,8 @@ $user_id=$_SESSION['user_id'];
                                 
                                     echo "
                                           
-                                    </tbody>
-                                    </table>
-                                </div>
-                                </div>
-                            </div>
+                                   
+                           
                             ";
                      
                                 //my last inser else
@@ -226,13 +231,13 @@ $user_id=$_SESSION['user_id'];
 
 
 
-                        </div>
+
 
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
                                      </form>
     </div>
                                      <?php
-     include 'includes/footer.php';       
+            
 }else{
     header('Location:index.php');
 }

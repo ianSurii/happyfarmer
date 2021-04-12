@@ -10,37 +10,6 @@ include('classes/DbFunctions.php');
 
 $execute=new dbFunction();
 
-if(isset($_POST['add_to_farm'])){
-    extract($_POST);
-                $data = $execute->select("farm_calendars","where id='$calendar_id'");
-                    if(count($data)==0){
-                       
-                    }else{
-                    
-                        $calendar_period=$data[0]['period'];
-                        $username=$_SESSION['username'];
-                        $days=$calendar_period;
-                        $table="farmer_calendars";
-                        $end_date=date('Y-m-d', strtotime($start_date.'+'.$days)); 
-                        $date=date_create($start_date);
-                       date_add($date,date_interval_create_from_date_string($calendar_period."days"));
-                       $end_date=date_format($date,"Y-m-d");
-                        $column="calendar_id,calendar_name,calendar_start_date,calendar_end_date,status,farm_id,user_name";
-                        $values="'$calendar_id','$calendar_name','$start_date','$end_date','1','$farm','$username'";
-                        $addToFarm=$execute->insert($table,$column,$values);
-                        
-                        
-                    }
-
-
-   
-                // echo "<script>window.alert('fill details".$_POST['add_to_farm'].")</script>";
-          
-
-
-}else{
-
-}
 
    if(isset($_SESSION['username'])) {
   $username=$_SESSION['username'];
@@ -60,14 +29,14 @@ if(isset($_POST['add_to_farm'])){
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Farms</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">Add</li>
-                                            <li class="breadcrumb-item active" aria-current="page">Crop Calendar</li>
+                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Reports</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">All</li>
+                                          
                                         </ol>
                                         </ol>
                                     </nav>
                                 </div>
-                                <a class="badge badge-warning" href='farms.php'>Go Back <span class="fas fa-undo"></span></a>
+                                <a class="badge badge-warning" href='worker.php'>Go Back <span class="fas fa-undo"></span></a>
                             </div>
                            
                         
@@ -76,113 +45,96 @@ if(isset($_POST['add_to_farm'])){
 <form  method="POST" action="" id="validationform" data-parsley-validate="" novalidate="">
 <!-- calendar_name 	period 	crop 	variety 	task_id 	region1 	region2 	region3 -->
 <p>
-                                         <div class="form-row">
-                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom03">Calendar Name</label>
-                                                 <input type="text" class="form-control" required="" name="calendar_name" id="validationCustom03" >
-                                                                 <div class="invalid-feedback">
-                                                 
-                                                 </div>
-                                             </div>
-                                             
-                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom04">Farm</label>
-                                                 <select type="text" class="form-control" required="" name="farm" id="validationCustom04">
-                                                     <?php
-                                                     $username=$_SESSION['username'];
-                                                     $farms=$execute->conditionSelect('name,id',"farms where owner='$username'");
-                                                     if($farms==true){
-                                                        echo"<option value='--.--' selected='selected'>select</option>";
-                                                     foreach($farms as $farm){
-                                                         echo"<option value=".$farm['id']." >".$farm['name']."</option>";
-                                                     }}
-                                                     else{
-                                                        echo"<option value='' selected='selected'>No crops Available</option>";
-                                                     }
 
-                                                     ?>
-                                                     
-                                       
-                                                     </select>
-                                                 <div class="invalid-feedback">
-                                                     Please provide a valid Email.
-                                                 </div>
-                                                 
-                                             </div>
-                                            
-                                             
-                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom04">Crop Calendar</label>
-                                                
-                                                   <select name="crop" id="c_code" class="form-control"
-                                                     data-live-search="true">
-                                                 <!-- <option value="0" selected='selected'>Select Crop</option> -->
-                                                 <?php
-                                                    
-                                                    $calendars=$execute->conditionSelect('distinct(crop_name) as crop',"crops ");
-                                                    if($calendars==true){
-                                                       echo"<option value='0' selected='selected'>Select Crop</option>";
-                                                    foreach($calendars as $calendar){
-                                                        // echo"<option type='submit' name='calendar' id='calendar' value=".$calendar['crop']." >".$calendar['crop']."</option>";
-                                                        echo "<option value='".$calendar['crop']."'>" .$calendar['crop']. "</option> ";
-                                                    }}
-                                                    else{
-                                                       echo"<option value='0' selected='selected'>No crops Available</option>";
-                                                    }
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                                        <thead>
+                                      
+                                            <tr>
 
-                                                 
-                                                         
+                                                <th>#</th>
+                                                <th>Buyer</th>
+                                                <th>Transaction</th>
+                                                <th>Cost</th>
+                                                <th>Status</th>
+                                                <th>Details</th>
+                                                <th>Units</th>
+                                                <th>Contact</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $user_id=$_SESSION['user_id'];
+
+                                            $farms_id=$execute->select("employees","where employee_id='$user_id'");
+                                            if($farms_id==true){
+                                             
                                                    
-                                                 ?>
-                                               <script type="text/javascript">
-    $("#c_code").change(function () {
-        $("#calendar_id").load('choice.php?tag=const&id=' + $(this).val());
-    });
-    
-    $("#county").change(function () {
-        $("#constituency").load('choice.php?tag=constituency&id3=' + $(this).val());
-    });
-</script>
-                                             </select>
-                                                 <div class="invalid-feedback">
-                                                     Please provide a valid Email.
-                                                 </div>
-                                                 
-                                             </div>
-                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom03">Start Date</label>
-                                                 <input type="date" class="form-control" required="" name="start_date" id="validationCustom04">
-                                                   
-                                             <div class="invalid-feedback">
-                                                     Please provide a valid Username.
-                                                 </div>
-                                             </div>
-                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom03">Variety</label>
-                                                 <select name="calendar_id" id="calendar_id" class="form-control">
-                                                 <option value="0" selected='selected'>Select Crop Variety</option>
+                                           
+                                           
+                                               
+                                           
+                                            foreach($farms_id as $farm){
+                                           
+                                               $farm_produce=$execute->select("produce","where farm_id='".$farm['id']."'");
+                                               if($farm_produce==true){
+                                                   foreach ($farm_produce as $produce) {
+                                                       if($produce['status']==1){
+                                                           $status="PAID";
+                                                       }else{
+                                                        $status="PEDDING";
+                                                       }
+                                                      
+                                           echo"
+                                            <tr>
+                                                <th>".$produce['id']."</th>
+                                                <th>".$produce['buyer']."</th>
+                                                <th>".$produce['trasnsaction']."</th>
+                                                <th>".$produce['cost']."</th>
+                                                <th>".$status."</th>
+                                                <th>".$produce['name']."</th>
+                                                <th>".$produce['units']."</th>
+                                                <th>".$produce['contact']."</th>
+                                            </tr>";}
+                                                   }
+                                                }
+                                            }else{
 
-                                                    </select>
-                                             <div class="invalid-feedback">
-                                                     Please provide a valid Username.
-                                                 </div>
-                                             </div>
-                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
-                                                 <label for="validationCustom03">Period</label>
-                                                 <select name="period" id="period" selected="selected" disabled='disabled' class="form-control">
-                                                 <!-- <option value="0" selected='selected'>Select Crop Variety</option> -->
-
-                                                    </select>
-                                             <div class="invalid-feedback">
-                                                     Please provide a valid Username.
-                                                 </div>
-                                             </div>
-                                             
-                                         
-                                         <button type="submit" class="btn btn-danger btn-lg btn-block" name="add_to_farm">CREATE</button>
+                                            }
+                                                                                     ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Buyer</th>
+                                                <th>Transaction</th>
+                                                <th>Cost</th>
+                                                <th>Status</th>
+                                                <th>Details</th>
+                                                <th>Units</th>
+                                                <th>Contact</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                                      </form>
     </div>
                                      <?php
+
+
+include 'includes/footer.php';
  
 }else{
     header('Location:index.php');

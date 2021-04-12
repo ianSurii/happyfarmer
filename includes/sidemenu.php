@@ -25,9 +25,22 @@
                                 $usertype=$_SESSION['usertype'];
 
                             if($usertype==1){
-                                echo" <li class='nav-item'>
-                                <a class='nav-link' href='farms.php'>Task</a>
-                                </li>";
+                                echo"
+                                <li class='nav-item'>
+                                <a class='nav-link fas fa-square-full' href='worker.php'>Dashboard</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fas fa-list' href='tasks.php'>Tasks</a>
+                                </li>
+                                  <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-calendar-alt' href='reports.php'>Reports</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-tree' href='produce.php'>Produce</a>
+                                </li>
+                                 
+                                
+                                ";
 
                             }elseif($usertype==11){
                                 echo" <li class='nav-item'>
@@ -42,9 +55,13 @@
                                 <li class='nav-item'>
                                 <a class='nav-link fa fa-fw fa-calendar-alt' href='reports.php'>Reports</a>
                                 </li>
-                                 <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-gift' href='inventory.php'>Inventory</a>
-                                </li>";
+                                <li class='nav-item'>
+                                <a class='nav-link fa fa-barcode' href='inventory.php'>Inventory</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-tree' href='produce.php'>Produce</a>
+                                </li>
+                                ";
 
                             }elseif($usertype==111){
                                 echo" <li class='nav-item'>
@@ -71,6 +88,9 @@
 
                         }
                            ?>
+                             <li class="nav-divider">
+                               User Info
+                            </li>
                             
                             <!-- <li class="nav-item ">
                             <a class="nav-link" href="create_calendars.php">Create</a>
@@ -81,12 +101,15 @@
                             <a class="nav-link fa fa-fw fa-cog" href="profile.php">Profile</a>
                               
                             </li>
-                            
-                            <li class="nav-divider">
-                                Calendar
+
+                            <li class="nav-item ">
+                            <a class="nav-link fas fa-fw fa-bell   " href="messages.php">Messages</a>
+                              
                             </li>
                             
-                            <li class="nav-item">
+                          
+                            
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-7" aria-controls="submenu-7"><i class="fas fa-fw fa-inbox"></i>Apps <span class="badge badge-secondary">New</span></a>
                                 <div id="submenu-7" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
@@ -104,7 +127,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li> -->
                            
                         </ul>
                     </div>
