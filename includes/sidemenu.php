@@ -52,14 +52,15 @@
                                  <li class='nav-item'>
                                 <a class='nav-link fas fa-arrows-alt' href='employees.php'>Employees</a>
                                 </li>
-                                <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-calendar-alt' href='reports.php'>Reports</a>
-                                </li>
+                                
                                 <li class='nav-item'>
                                 <a class='nav-link fa fa-barcode' href='inventory.php'>Inventory</a>
                                 </li>
                                 <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-tree' href='farmer_reports.php'>Produce</a>
+                                <a class='nav-link fa fa-fw fa-tree' href='produce'>Produce</a>
+                                </li>
+                                <li class='nav-item'>
+                                <a class='nav-link fa fa-fw fa-calendar-alt' href='farmer_reports.php'>Reports</a>
                                 </li>
                                 ";
 
