@@ -59,7 +59,7 @@
                                 <a class='nav-link fa fa-barcode' href='inventory.php'>Inventory</a>
                                 </li>
                                 <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-tree' href='produce.php'>Produce</a>
+                                <a class='nav-link fa fa-fw fa-tree' href='farmer_reports.php'>Produce</a>
                                 </li>
                                 ";
 
