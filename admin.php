@@ -14,8 +14,7 @@ $execute=new dbFunction();
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                            <h2 class="pageheader-title">Happy Farmer </h2>
-                                
+                            <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2>                                 
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -77,7 +76,7 @@ $execute=new dbFunction();
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">New Customer</h5>
+                                        <h5 class="text-muted">Farming Calendars</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1"><?php foreach($calendars as $calendar){
                                                echo "    ".$calendar['count_calendar'];}}?></h1>
@@ -98,9 +97,18 @@ $execute=new dbFunction();
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Visitors</h5>
+                                        <h5 class="text-muted">Active Farms</h5>
                                         <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">13000</h1>
+                                            <h1 class="mb-1">
+                                            <?php 
+                                              $count_farms=$execute->conditionSelect("count(id) as farms","farms");
+                                              if($count_farms==true){
+                                            foreach($count_farms as $farm){
+                                               echo "    ".$farm['farms'];}}?>
+                                            
+                                            </h1>
+                                            <br>
+                                            <br>
                                         </div>
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                             <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span>
@@ -117,9 +125,18 @@ $execute=new dbFunction();
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Users</h5>
+                                        <h5 class="text-muted">Active Farmers</h5>
                                         <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">1340</h1>
+                                            <h1 class="mb-1">
+                                            <?php 
+                                              $count_farmers=$execute->conditionSelect("count(id) as farmers","user_records where user_type=11");
+                                              if($count_farmers==true){
+                                            foreach($count_farmers as $farmers){
+                                               echo "    ".$farmers['farmers'];}}?>
+                                            
+                                            </h1>
+                                            <br>
+                                            <br>
                                         </div>
                                         <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
                                             <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">4%</span>
@@ -133,27 +150,46 @@ $execute=new dbFunction();
                         </div>
                         
                             
-                        <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="card">
-                                    <h5 class="card-header">Recent Orders</h5>
+                                    <h5 class="card-header">Recent Calendars</h5>
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="bg-light">
-                                                    <tr class="border-0">
-                                                        <th class="border-0">#</th>
-                                                        <th class="border-0">Image</th>
-                                                        <th class="border-0">Product Name</th>
-                                                        <th class="border-0">Product Id</th>
-                                                        <th class="border-0">Quantity</th>
-                                                        <th class="border-0">Price</th>
-                                                        <th class="border-0">Order Time</th>
-                                                        <th class="border-0">Customer</th>
-                                                        <th class="border-0">Status</th>
+                                                <tr class='border-0'>
+                                                        <th class='border-0'>#</th>
+                                                        <th class='border-0'>Name</th>
+                                                        <th class='border-0'>Crop</th>
+                                                        <th class='border-0'>Variety</th>
+                                                        <th class='border-0'>Period</th>
+                                                        <th class='border-0'>Region#1</th>
+                                                        <th class='border-0'>Region#2</th>
+                                                        <th class='border-0'>Region#3</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                   
+                                                <?php
+                                                $select_calendars=$execute->selectAll('farm_calendars');
+                                                if($select_calendars==true){
+                                                foreach($select_calendars as $calendar){
+                                                
+                                                    echo"
+                                                <tr class='border-0'>
+                                                        <th class='border-0'>".$calendar['id']."</th>
+                                                        <th class='border-0'>".$calendar['calendar_name']."</th>
+                                                        <th class='border-0'>".$calendar['crop']."</th>
+                                                        <th class='border-0'>".$calendar['variety']."</th>
+                                                        <th class='border-0'>".$calendar['period']."</th>
+                                                        <th class='border-0'>".$calendar['region1']."</th>
+                                                        <th class='border-0'>".$calendar['region2']."</th>
+                                                        <th class='border-0'>".$calendar['region3']."</th>
+                                                       
+                                                    </tr>";
+                                                }
+                                                   }else{}
+                                                   ?>
                                                 </tbody>
                                             </table>
                                         </div>

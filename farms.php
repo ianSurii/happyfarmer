@@ -12,6 +12,15 @@ if(isset($_GET['delete'])){
     $delete=$execute->delete("farmer_calendars","where id=$delete");
     unset($_POST);
 }
+if(isset($_GET['delete_farm'])){
+    extract($_GET);
+    $delete_farm=$execute->delete("farms","where id='$delete_farm'");
+    // $delete_employee=$execute->delete("employees","where employee_id='$delete'");
+    if($delete_employee==true){
+        header('Location:employees.php');
+    }
+
+}
 
    if(isset($_SESSION['username'])) {
     // && !empty($_SESSION['id']=$id)
@@ -32,7 +41,7 @@ if(isset($_GET['delete'])){
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                              <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -54,7 +63,7 @@ if(isset($_GET['delete'])){
                                 <!-- <div class="myDIV">
                                 <a class="badge badge-secondary" href='new_employees.php'>Add Employee<span class="fas fa-calendar-plus"></span></a> </div> -->
                                 <a class="badge badge-info" href='farm_calendar.php'>Add Calendar<span class="fas fa-calendar-plus"></span></a> 
-                                <a class="badge badge-success" href='new_farm.php'>Add Employee<span class="fas fa-calendar-plus"></span></a> </div>
+                                <a class="badge badge-success" href='new_farm.php'>Add Farm<span class="fas fa-tree"></span></a> </div>
                             </div>
                            
                         
@@ -111,7 +120,8 @@ $user_id=$_SESSION['user_id'];
                                        
                                         <h2 class='mb-0'>". strtoupper($farm['name'])."</h2>
                                     </div>
-                                    <div class='float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1'>
+                                    <div class='float-right   '>
+                                    <a href='?delete_farm=".$farm['id']."'><span class='fa fa-trash-alt danger'></span></a>
                                         <i class='fa fa-eye fa-fw fa-sm text-info'></i>
                                     </div>
                                     
@@ -232,12 +242,12 @@ $user_id=$_SESSION['user_id'];
 
 
 
-                        </div>
-
+                       
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
                                      </form>
-    </div>
+    
                                      <?php
+                                       require ('includes/footer.php');
             
 }else{
     header('Location:index.php');

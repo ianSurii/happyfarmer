@@ -5,6 +5,13 @@ include('classes/DbFunctions.php');
 
 
 $execute=new dbFunction();
+if(isset($_GET['delete'])){
+    extract($_GET);
+    $delete_crop=$execute->delete("crops","Where id='$delete'");
+    if($delete_crops==true){
+        echo "<script>window.alert('delete')</script>";
+    }
+}
 
 
 
@@ -29,8 +36,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
-                               <div class="page-breadcrumb">
+                        <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2>                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="crops.php" class="breadcrumb-link">Crops</a></li>
@@ -50,47 +56,59 @@ $execute=new dbFunction();
 
 
 
-<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <!-- <div class="card">
-                               
-                                <div class="card-body"> -->
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                            <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
-<!-- editor	calendar_name	period	id	crop	variety	region1	region2	region3 	 -->
-                                                <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                
-                                                <th scope="col">variety</th>
-                                                <th scope="col">Regions</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <style>
-                                        .hide{
-
-                                                visibility: hidden
-
-                                                }
-                                        </style>
-                                        <tbody>
-                                                                                    <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
+                           
 
                                             <?php
                                                foreach($places as $place){
-                                                   echo"
+
+
+                                                echo   "
+                                                <div class='card' value='Show-Hide' '>
+                                                                           <div class='card-body'>
+                                                                              
+
+<div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                                                                               <table class='table table-hover'>
+                                        <thead>
                                             <tr>
-                                                <th scope='row'>".$place['id']."</th>
-                                                <td >".$place['crop_name']."</td>
-                                                <td>".$place['crop_variety']."</td>
-                                                <td>".$place['crop_locations']."</td>
-                                                
-                                                <td><a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
-                                                <a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
-                                                <input type='checkbox' href='view_task.php?calendar_id=".$place['id']."'></td>
-                                                </tr>
-                                            ";
+
+                                                                               <th scope='col'>#</th>
+                                                                               <th scope='col'>Name</th>
+                                                                               
+                                                                               <th scope='col'>variety</th>
+                                                                               <th scope='col'>Regions</th>
+                                                                               
+                                                                           </tr>
+                                                                       </thead>
+                                                                       
+                                                                       <tbody>
+                                                                                
+                                                                                  
+                                                                               <tr>
+                                                                               <th scope='row'>".$place['id']."</th>
+                                                                               <td >".$place['crop_name']."</td>
+                                                                               <td>".$place['crop_variety']."</td>
+                                                                               <td>".$place['crop_locations']."</td>
+                                                                               
+                                                                               <td><a  class='badge badge-success' href='?delete=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
+                                                                               <a  class='badge badge-success' href='?calendaredit_id=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
+                                                                               </td>
+
+                                                                               </tr>
+                                                                                               
+                                                                                </tbody>
+                                                                                </table>
+                                                                              </div>
+                                                                             
+                                                                               
+                                                                              
+                                                                           </div>
+                                                                           </div>
+                                                                    ";
+
+
+
+                                                 
                                                }}
 
                                             }else{
@@ -100,18 +118,14 @@ $execute=new dbFunction();
                                             ";
 
                                                ?>
-                                            
-                                        </tbody>
-                                    </table>
-                                <!-- </div>
-                            </div> -->
-                        </div>
-
-                                         <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
-                                     </form>
-    </div>
-                                     <?php
+                                        
+                                </div>
+                            </div>
+                        
+              <?php
+                                 
 
     header('Location:index.php');
 }
+require ('includes/footer.php');
 ?>

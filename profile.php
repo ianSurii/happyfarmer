@@ -115,8 +115,7 @@ $execute=new dbFunction();
 
                                 </div>
                             </div>
-                        </div>
-                                                </div>
+                        
 <?php
  }else{
     header('Location:index.php');

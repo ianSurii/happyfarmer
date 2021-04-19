@@ -50,10 +50,10 @@ $execute=new dbFunction();
                                                  
                                                  </div>
                                              </div>
-                                        </div>
+                                    
                                          <button type="submit" class="btn btn-success btn-lg btn-block" name="add_farm"><span></span>ADD</button>
                                      </form>
-</div>
+
 <?php
-include 'includes/footer.php';
+  require ('includes/footer.php');
 ?>

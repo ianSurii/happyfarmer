@@ -29,7 +29,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                              <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -54,35 +54,38 @@ $execute=new dbFunction();
                             <!-- <div class="card">
                                
                                 <div class="card-body"> -->
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                            <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
-<!-- editor	calendar_name	period	id	crop	variety	region1	region2	region3 	 -->
-                                                <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                
-                                                <th scope="col">latitude</th>
-                                                <th scope="col">Longtude</th>
-                                                <th scope="col">Details</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Editor 1</th>
-                                                <th scope="col">Edit</th>
-                                            </tr>
-                                        </thead>
-                                        <style>
-                                        .hide{
-
-                                                visibility: hidden
-
-                                                }
-                                        </style>
-                                        <tbody>
-                                                                                    <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
+                                                                  <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
 
                                             <?php
                                                foreach($places as $place){
                                                    echo"
+                                                   <div class='card' value='Show-Hide' '>
+                                                                           <div class='card-body'>
+                                                                              
+
+<div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                                                                               <table class='table table-hover'>
+                                        <thead>
+                                            <tr>
+
+                                            <th scope='col'>#</th>
+                                            <th scope='col'>Name</th>
+                                            
+                                            <th scope='col'>latitude</th>
+                                            <th scope='col'>Longtude</th>
+                                            <th scope='col'>Details</th>
+                                            <th scope='col'>Date</th>
+                                            <th scope='col'>Editor 1</th>
+                                            <th scope='col'>Edit</th>
+                                                                           </tr>
+                                                                       </thead>
+                                                                       
+                                                                       <tbody>
+
+
+
+
+
                                             <tr>
                                                 <th scope='row'>".$place['id']."</th>
                                                 <td >".$place['name']."</td>
@@ -91,16 +94,22 @@ $execute=new dbFunction();
                                                 <td>".$place['place_details']."</td>
                                                 <td>".$place['date_added']."</td>
                                                 <td>".$place['admin']."</td>
-                                                <td><a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
-                                                <a  class='badge badge-success' href='view_task.php?calendar_id=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
-                                                <input type='checkbox' href='view_task.php?calendar_id=".$place['id']."'></td>
+                                                <td><a  class='badge badge-success' href='?edit=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
+                                                <a  class='badge badge-success' href='?delete=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
+                                               
                                                 </tr>
-                                            ";
+
+
+                                                </tbody>
+                                    </table>
+                                            
+                                    </div>
+                                    </div>
+                                       </div>";
                                                }}
                                             ?>
                                             
-                                        </tbody>
-                                    </table>
+                                        
                                 <!-- </div>
                             </div> -->
                         </div>
@@ -109,6 +118,7 @@ $execute=new dbFunction();
                                      </form>
     </div>
                                      <?php
+                                       require ('includes/footer.php');
             
 }else{
     header('Location:index.php');

@@ -23,10 +23,15 @@ if(isset($_POST['add_produce'])){
         
     }
 
-    $insert_records=$execute->insert("produce","farm_id,cost,buyer,trasnsaction,status,contact,name,unit","'$id','$cost','$buyer','$transaction','$status','$contact','$name','$unit'");
+    $insert_records=$execute->insert("produce","farm_id,cost,buyer,trasnsaction,status,contact,name,unit","'$id','$cost','$buyer','$transaction','$status','$contact','$details','$unit'");
     if($insert_records==true){
         echo "<script>window.alert('".$id."Added Successfully')</script>";
-        header('Location:produce.php');
+        if($usertype==111){
+            header('Location:produce.php');
+        }elseif($usertype==11){
+            header('Location:farmer_produce.php');
+        }
+        
     }
    
 
@@ -50,8 +55,7 @@ if(isset($_POST['add_produce'])){
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
-                               <div class="page-breadcrumb">
+                        <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2>                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Employees</a></li>
@@ -109,7 +113,7 @@ if(isset($_POST['add_produce'])){
                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                                  <label for="">Transaction</label>
                                                 <select type="text" class="form-control" required="" name="transaction" id=""  >
-                                                <option value="DEBIT">DEBIT</option>
+                                                <option value="CREDIT">CREDIT</option>
                                                 <option value="CASH">CASH</option>
                                                  </select>
                                                  <div class="invalid-feedback">

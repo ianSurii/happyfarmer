@@ -57,7 +57,7 @@
                                 <a class='nav-link fa fa-barcode' href='inventory.php'>Inventory</a>
                                 </li>
                                 <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-tree' href='produce'>Produce</a>
+                                <a class='nav-link fa fa-fw fa-tree' href='farmer_produce.php'>Produce</a>
                                 </li>
                                 <li class='nav-item'>
                                 <a class='nav-link fa fa-fw fa-calendar-alt' href='farmer_reports.php'>Reports</a>
@@ -66,7 +66,7 @@
 
                             }elseif($usertype==111){
                                 echo" <li class='nav-item'>
-                                <a class='nav-link fas fa-square-full' href='dashboard.php'>Dashboard</a>
+                                <a class='nav-link fas fa-square-full' href='admin.php'>Dashboard</a>
                                 </li>
                                 <li class='nav-item'>
                                 <a class='nav-link fas fa-tree' href='crops.php'>Crops</a>
@@ -77,9 +77,7 @@
                                 <li class='nav-item'>
                                 <a class='nav-link fa fa-fw fa-calendar-alt' href='view_calendars.php'>Celendars</a>
                                 </li>
-                                 <li class='nav-item'>
-                                <a class='nav-link fa fa-fw fa-gift' href='farms.php'>Recomendations</a>
-                                </li>";
+                                 ";
 
                             }else{
                                 // header('Location:index.php');
@@ -97,14 +95,18 @@
                             <a class="nav-link" href="create_calendars.php">Create</a>
                                
                             </li> -->
-                            
+                            <li class="nav-item ">
+                            <a class="nav-link fas fa-fw fa-bell   " href="messages.php">Messages</a>
+                              
+                            </li>
                             <li class="nav-item ">
                             <a class="nav-link fa fa-fw fa-cog" href="profile.php">Profile</a>
                               
                             </li>
 
+                           
                             <li class="nav-item ">
-                            <a class="nav-link fas fa-fw fa-bell   " href="messages.php">Messages</a>
+                            <a class="nav-link fas fa-fw fa-bell   " href="logout.php">Logout</a>
                               
                             </li>
                             

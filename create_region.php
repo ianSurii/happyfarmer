@@ -45,8 +45,7 @@ if(isset($_POST['addRegion'])){
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
-                               <div class="page-breadcrumb">
+                        <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2>                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="regions.php" class="breadcrumb-link">Regions</a></li>
@@ -99,8 +98,9 @@ if(isset($_POST['addRegion'])){
                                          
                                          <button type="submit" class="btn btn-danger btn-lg btn-block" name="addRegion"><span class="fas fa-pencil-alt"></span>ADD</button>
                                      </form>
-    </div>
+    
                                      <?php
+                                       require ('includes/footer.php');
  
 }else{
     header('Location:index.php');

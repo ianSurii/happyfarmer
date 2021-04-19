@@ -5,7 +5,15 @@ include('classes/DbFunctions.php');
 
 
 $execute=new dbFunction();
+if(isset($_GET['delete'])){
+    extract($_GET);
+    $delete_user=$execute->delete("user_records","where id='$delete'");
+    $delete_employee=$execute->delete("employees","where employee_id='$delete'");
+    if($delete_employee && $delete_user==true){
+        header('Location:employees.php');
+    }
 
+}
 
 
    if(isset($_SESSION['username'])) {
@@ -27,8 +35,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
-                               <div class="page-breadcrumb">
+                        <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2>                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Farms</a></li>
@@ -69,13 +76,16 @@ $user_id=$_SESSION['user_id'];
  if($employees==true){
   
         
-
-
+  
     
 
  foreach($employees as $employee){
     $result = "employee".$employee['id'];
     $id=$employee['employee_id'];
+    $select_farm=$execute->select("farms"," where id='".$employee['farms']."'");
+    $count_emp_activities=$execute->conditionSelect("count(id) as id","activity_assigned where user_id='$id'");
+
+
 
 
     $cardname=str_replace(' ', '',$result);
@@ -108,8 +118,10 @@ $user_id=$_SESSION['user_id'];
                                        
                                         <h2 class='mb-0'>". strtoupper($details['first_name']." ".$details['last_name'])."</h2>
                                     </div>
-                                    <div class='float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1'>
-                                        <i class='fa fa-eye fa-fw fa-sm text-info'></i>
+                                    <div class='float-right  '>
+                                    <a href='edit_employee.php?edit=$id'><span class ='icon-circle-medium fas fa-pencil-alt'></span>
+                                        <a href='?delete=$id'><span class ='icon-circle-medium fas fa-trash-alt'></span>
+                                        <i class='fa fa-eye text-info'></i>
                                     </div>
                                     
                                     <div id='".$employee['id']."' style='display:none;'>";
@@ -148,9 +160,9 @@ $user_id=$_SESSION['user_id'];
                                            
                                             <tr>
                                             <th scope='col'>".$details['first_name'].$details['last_name']."</th>
-                                            <th scope='col'>".$details['user_name']."</th>
+                                            <th scope='col'>".$select_farm[0]['name']."</th>
                                             <th scope='col'>".$details['phone_number']."</th>
-                                            <th scope='col'>".$details['id']."</th>
+                                            <th scope='col'>".$count_emp_activities[0]['id']."</th>
                                             <th scope='col'>".$details['email']."</th>
                                                 </tr>
                                           
@@ -229,12 +241,12 @@ $user_id=$_SESSION['user_id'];
 
 
 
-                        </div>
 
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
                                      </form>
-    </div>
+ 
                                      <?php
+                                     include 'includes/footer.php';
             
 }else{
     header('Location:index.php');

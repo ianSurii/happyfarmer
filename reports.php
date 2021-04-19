@@ -25,7 +25,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                            <h2 class="pageheader-title"><image src="assets/images/icon.png" width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -85,13 +85,13 @@ $execute=new dbFunction();
                                            
                                             foreach($farms_id as $farm){
                                            
-                                               $farm_produce=$execute->select("produce","where farm_id='".$farm['id']."'");
+                                               $farm_produce=$execute->select("produce","where farm_id='".$farm['farms']."'");
                                                if($farm_produce==true){
                                                    foreach ($farm_produce as $produce) {
                                                        if($produce['status']==1){
                                                            $status="PAID";
                                                        }else{
-                                                        $status="PEDDING";
+                                                        $status="PENDING";
                                                        }
                                                       
                                            echo"

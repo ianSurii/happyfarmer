@@ -25,7 +25,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                            <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -74,37 +74,42 @@ $execute=new dbFunction();
                                         <tbody>
                                             <?php 
                                             $user_id=$_SESSION['user_id'];
+                                            $username=$_SESSION['username'];
 
-                                            $farms_id=$execute->select("employees","where employer='$user_id'");
+                                            $farms_id=$execute->select("farms","where owner='$username'");
+
                                             if($farms_id==true){
                                              
-                                                   
-                                           
-                                           
+                                                 
                                                
                                            
+                                            
+                                           
                                             foreach($farms_id as $farm){
+                                               
                                            
                                                $farm_produce=$execute->select("produce","where farm_id='".$farm['id']."'");
                                                if($farm_produce==true){
+                                                for($i=1;$i<=count($farm_produce);$i++){  
                                                    foreach ($farm_produce as $produce) {
                                                        if($produce['status']==1){
                                                            $status="PAID";
                                                        }else{
-                                                        $status="PEDDING";
+                                                        $status="PENDING";
                                                        }
                                                       
                                            echo"
                                             <tr>
-                                                <th>".$produce['id']."</th>
+                                                <th>".$i++."</th>
                                                 <th>".$produce['buyer']."</th>
                                                 <th>".$produce['trasnsaction']."</th>
                                                 <th>".$produce['cost']."</th>
                                                 <th>".$status."</th>
                                                 <th>".$produce['name']."</th>
-                                                <th>".$produce['units']."</th>
+                                                <th>".$produce['unit']."</th>
                                                 <th>".$produce['contact']."</th>
                                             </tr>";}
+                                                    }
                                                    }
                                                 }
                                             }else{
@@ -112,7 +117,7 @@ $execute=new dbFunction();
                                             }
                                                                                      ?>
                                         </tbody>
-                                        <tfoot>
+                                        <!-- <tfoot>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Buyer</th>
@@ -123,7 +128,7 @@ $execute=new dbFunction();
                                                 <th>Units</th>
                                                 <th>Contact</th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                     </table>
                                 </div>
                             </div>

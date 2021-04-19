@@ -44,7 +44,7 @@ if(isset($_GET['activity_id'])){
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                        <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -182,8 +182,10 @@ if(isset($_GET['activity_id'])){
                                          <button type="submit" class="btn btn-info btn-lg btn-block" name="post_activity">CREATE ACTIVITY</button>
                                          <a class="btn btn-info btn-lg btn-block"  href='view_calendars.php'><span class='fas fa-undo'> </span></a>
                                      </form>
-    </div>
+                                     </div>
                                      <?php
+                                   
+                                       require ('includes/footer.php');
         }
 }else{
     header('Location:index.php');

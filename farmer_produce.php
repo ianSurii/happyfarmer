@@ -6,7 +6,6 @@ include('classes/DbFunctions.php');
 
 $execute=new dbFunction();
 
-
 if(isset($_GET['delete'])){
     extract($_GET);
 
@@ -60,7 +59,7 @@ if(isset($_GET['paid'])){
                                 </style>
                                 <!-- <div class="myDIV">
                                 <a class="badge badge-secondary" href='new_employees.php'>Add Employee<span class="fas fa-calendar-plus"></span></a> </div> -->
-                                <a class="badge badge-info" href='add_produce.php'>ADD<span class="fas fa-calendar-plus"></span></a> 
+                                <a class="badge badge-info" href='farmer_add_produce.php'>ADD<span class="fas fa-calendar-plus"></span></a> 
                                
                             </div>
                            
@@ -80,7 +79,7 @@ if(isset($_GET['paid'])){
 $username=$_SESSION['username'];
 $user_id=$_SESSION['user_id'];
 
- $farms_id=$execute->select("employees","where employee_id='$user_id'");
+ $farms_id=$execute->select("farms","where owner='$username'");
  if($farms_id==true){
   
         
@@ -90,30 +89,28 @@ $user_id=$_SESSION['user_id'];
 
  foreach($farms_id as $farm){
 
-    $farm_produce=$execute->select("produce","where farm_id='".$farm['farms']."'");
-    if($farm_produce==true){
+    $farm_produce=$execute->select("produce","where farm_id='".$farm['id']."'");
+if($farm_produce==true){
     // 
 // $select_farm_n
-        foreach($farm_produce as $produce){  
-            // if($produce['status']==1){
-            //     $status="PAID";
-            // }else{
-            //     $status="PENDING";
-            // }
+                    foreach($farm_produce as $produce){  
+                        $id=$produce['id'];
+                                    if($produce['status']==1){
+                                        $status="PAID";
 
-            if($produce['status']==1){
-                $status="PAID";
-
-            }else{
-                $status="PENDING
-                <a class ='btn btn-success' href='?paid=$id'><span class ='far fa-handshake'>mark<br> as<br>
-                paid</span></a>";
-            }
-    $result = "farm".$produce['id'];
-    $id=$produce['id'];
+                                    }else{
+                                        $status="PENDING
+                                        <a class ='btn btn-success' href='?paid=$id'><span class ='far fa-handshake'>mark<br> as<br>
+                                        paid</span></a>";
+                                    }
+                                //    if($produce['trasnsaction']=="CREDIT"){
+                                //        $transaction="CREDIT<a href='?paid=1"
+                                //    }
+                                            $result = "farm".$produce['id'];
+                              
 
 
-    $cardname=str_replace(' ', '',$result);
+                                $cardname=str_replace(' ', '',$result);
 
             
              
@@ -190,31 +187,11 @@ $user_id=$_SESSION['user_id'];
                                  ";}
                                 }else{
 
-                                    echo    "
-                                    
-                                                            <tr>
-                                                            Empty
-                                                                <tr>
-                                                          
-                                                             
-                                                            
-                                                        </tbody>
-                                                    </table>
-                
-                                                 
-                                                   
-                                                
-                                                
-                                            ";
+                                     
                                     }
                                 
                                    
                                 
-                                    echo "
-                                          
-                                   
-                           
-                            ";
                      
                                 //my last inser else
                             //Firs foreach

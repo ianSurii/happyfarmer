@@ -39,7 +39,7 @@ if($check==false){
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                            <h2 class="pageheader-title">Happy Farmer </h2>
+                            <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                 
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
@@ -87,7 +87,7 @@ if($check==false){
                                         </div>
                                         </br>
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5.86%</span>
+                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1"></span>
                                         </div>
                                         
                                         
@@ -100,20 +100,21 @@ if($check==false){
                             <!-- ============================================================== -->
                             <!-- ============================================================== -->
                             <?php
-                            $calendars=$execute->conditionSelect("count(calendar_name) as count_calendar","farm_calendars");
+                            $usernam=$_SESSION['username'];
+                            $calendars=$execute->conditionSelect("count(calendar_name) as count_calendar","farmer_calendars where user_name='$username'");
                           if($calendars==true){
                             ?>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">New Customer</h5>
+                                        <h5 class="text-muted">Calendar In Use</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1"><?php foreach($calendars as $calendar){
                                                echo "    ".$calendar['count_calendar'];}}?></h1>
                                         </div>
                                         <br>
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">10%</span>
+                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -131,10 +132,11 @@ if($check==false){
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1">
                                             <?php
-                                            $select_crops=$execute->conditionSelect("count(employee_id) as employees","employees where employer='$user_id'");
-                          if($select_crops==true){
-                            foreach($calendars as $calendar){
-                                echo "    ".$calendar['count_calendar'];}}
+                                            $username=$_SESSION['username'];
+                                            $count_farm=$execute->conditionSelect("count(id) as id","farms where owner='$username'");
+                          if($count_farm==true){
+                           
+                                echo "    ".$count_farm[0]['id'];}
 
                               ?></h1>
 
@@ -143,7 +145,7 @@ if($check==false){
                                         </div>
                                        
                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span>
+                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -157,12 +159,35 @@ if($check==false){
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                 <div class="card border-3 border-top border-top-primary">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Users</h5>
+                                        <h5 class="text-muted">Customers</h5>
                                         <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">1340</h1>
+                                        <h1 class="mb-1">
+                                        <?php
+                                            $username=$_SESSION['username'];
+                                            // $customers=0;
+                                            // $username=$_SESSION['username'];
+
+                                            $select_farms=$execute->select("farms","where owner='$username'");
+                                            foreach($select_farms as $farm_details){
+
+                                            $count_customers=$execute->select("produce"," where farm_id='".$farm_details['id']."'");
+                                            // $total=$customers+$count_customers['id'];
+
+                         
+                        
+                                                if($count_customers==true){
+                                                
+                                                    echo count($count_customers);
+                                                    ;}
+                                                }
+
+
+                              ?></h1> 
+                              <br>
+                              <br>
                                         </div>
                                         <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">4%</span>
+                                            <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1"></span>
                                         </div>
                                     </div>
                                 </div>

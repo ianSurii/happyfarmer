@@ -27,7 +27,7 @@ $execute=new dbFunction();
 <div class="container-fluid dashboard-content ">
 <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h2 class="pageheader-title">Happy Farmer </h2> 
+                              <h2 class="pageheader-title"><image src="assets/images/icon.png"  width="60px" height="50px">Happy Farmer </h2> 
                                <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -67,12 +67,10 @@ $execute=new dbFunction();
                                <script type='text/javascript' language='javascript'>
                                   function ".$cardname."(){
                                       var ele = document.getElementById(".$div_id.");
-                                      if(ele.style.display == 'block') {
-                                              ele.style.display = 'none';
+                                      if(ele.style.display == 'none') {
+                                              ele.style.display = 'block';
                                       }
-                                      else {
-                                          ele.style.display = 'block';
-                                      }
+                                      
                                   }
 
                                   </script>
@@ -96,7 +94,7 @@ $execute=new dbFunction();
                                                 <th scope='col'>Region 1</th>
                                                 <th scope='col'>Region 2</th>
                                                 <th scope='col'>Region 3</th>
-                                                <th scope='col'>Edit</th>
+                                                
                                             </tr>
                                         </thead>
                                        
@@ -112,8 +110,7 @@ $execute=new dbFunction();
                                                 <td>".$calendar['region1']."</td>
                                                 <td>".$calendar['region2']."</td>
                                                 <td>".$calendar['region3']."</td>
-                                                <td><a  class='badge badge-info' href='view_task.php?calendar_id=".$calendar['id']."'>Edit</a></td>
-                                                </tr>
+                                                
                                             </tbody>
                                                </table>
                                            
@@ -146,7 +143,7 @@ $execute=new dbFunction();
                                              <td>".$activities[0]['activity']."</td>
                                              <td>".$task['task_title']."</td>
                                              <td>".$task['week']."</td>
-                                             <td><a  class='badge badge-danger' href='edit_calendar_task.php?task_id=".$task['id']."'>Edit</a></td>
+                                             <td><a  class='badge badge-danger' href=' edit_calendar_task.php?task_id=".$task['id']."'>Edit</a></td>
                                              </tr>
                                              
                                          ";
@@ -177,11 +174,7 @@ $execute=new dbFunction();
                                                
                                             ?>
                                             
-                                        </div>
-
-                                         <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
-                                     <!-- </form> -->
-    </div>
+                                        
                                      <?php
                                      include 'includes/footer.php';
             
