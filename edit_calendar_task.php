@@ -169,8 +169,8 @@ if(isset($_GET['activity_id'])){
                                                  </div>
                                              </div>
                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                                 <label for="">Estimated Time</label>
-                                                 <input type="text" class="form-control" required="" name="time" id="" placeholder="Doe" required>
+                                                 <label for="">Estimated Time/Ha</label>
+                                                 <input type="text" class="form-control" required="" name="time" id="" placeholder="1.0Ha" required>
                                                  <div class="invalid-feedback">
                                                      Please provide a valid Last name.
                                                  </div>
