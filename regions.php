@@ -6,7 +6,13 @@ include('classes/DbFunctions.php');
 
 $execute=new dbFunction();
 
-
+if(isset($_GET['delete'])){
+    extract($_GET);
+    $delete_crop=$execute->delete("regions","Where id='$delete'");
+    if($delete_crops==true){
+        echo "<script>window.alert('delete')</script>";
+    }
+}
 
    if(isset($_SESSION['username']) ) {
     // && !empty($_SESSION['id']=$id)
