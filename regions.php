@@ -24,8 +24,7 @@ if(isset($_GET['delete'])){
         require 'includes/header.inc';
         require 'includes/navbar.inc';
         include 'includes/sidemenu.php';
-        $places=$execute->selectAll("regions");
-        if($places==true){
+        
          
        
 
@@ -49,6 +48,7 @@ if(isset($_GET['delete'])){
                            
                         
  </div>
+ </div>
  
 
 <form  method="POST" action="" id="validationform" data-parsley-validate="" novalidate="">
@@ -56,13 +56,15 @@ if(isset($_GET['delete'])){
 
 
 
-<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"> -->
                             <!-- <div class="card">
                                
                                 <div class="card-body"> -->
                                                                   <!-- Full texts 	id 	name 	latitude 	longtitude 	place_details 	date_added 	admin   -->
 
                                             <?php
+                                            $places=$execute->selectAll("regions");
+                                            if($places==true){
                                                foreach($places as $place){
                                                    echo"
                                                    <div class='card' value='Show-Hide' '>
@@ -100,7 +102,7 @@ if(isset($_GET['delete'])){
                                                 <td>".$place['place_details']."</td>
                                                 <td>".$place['date_added']."</td>
                                                 <td>".$place['admin']."</td>
-                                                <td><a  class='badge badge-success' href='?edit=".$place['id']."'><span class='fas fa-pencil-alt'><span></a>
+                                                <td>
                                                 <a  class='badge badge-success' href='?delete=".$place['id']."'><span class='fas fa-trash-alt'><span></a>
                                                
                                                 </tr>
@@ -118,7 +120,7 @@ if(isset($_GET['delete'])){
                                         
                                 <!-- </div>
                             </div> -->
-                        
+                        <!-- </div> -->
 
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
                                      </form>
