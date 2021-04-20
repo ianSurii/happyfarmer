@@ -118,11 +118,11 @@ if(isset($_GET['delete'])){
                                         
                                 <!-- </div>
                             </div> -->
-                        </div>
+                        
 
                                          <!-- <button type="submit" class="btn btn-danger btn-lg btn-block" name="create">CREATE</button> -->
                                      </form>
-    </div>
+
                                      <?php
                                        require ('includes/footer.php');
             
