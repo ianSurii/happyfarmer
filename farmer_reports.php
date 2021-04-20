@@ -64,7 +64,7 @@ $execute=new dbFunction();
                                                 <th>#</th>
                                                 <th>Buyer</th>
                                                 <th>Transaction</th>
-                                                <th>Cost</th>
+                                                <!-- <th>Cost</th> -->
                                                 <th>Status</th>
                                                 <th>Details</th>
                                                 <th>Units</th>
@@ -103,7 +103,7 @@ $execute=new dbFunction();
                                                 <th>".$i++."</th>
                                                 <th>".$produce['buyer']."</th>
                                                 <th>".$produce['trasnsaction']."</th>
-                                                <th>".$produce['cost']."</th>
+                                              
                                                 <th>".$status."</th>
                                                 <th>".$produce['name']."</th>
                                                 <th>".$produce['unit']."</th>

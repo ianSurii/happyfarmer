@@ -398,7 +398,7 @@ if($count_task_due_this_week==true){
                                                                                 $user_id=$_SESSION['user_id'];
                                                                                 $select_employees=$execute->select("employees","where employer='$user_id' && id='$farm_id' ");
                                                                                
-                                                                                if( count($assign_status)==0){
+                                                                                if( $assign_status==0){
                                                                                     foreach($select_employees as $employee){
                                                                                         $select_emp_details=$execute->conditionSelect("first_name,last_name","user_records where id='".$employee['employee_id']."'");
 
