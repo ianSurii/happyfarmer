@@ -18,7 +18,7 @@ if(isset($_POST['add_inventory'])){
     $create=$execute->insert('inventory',$column,$values);
     if($create==true){
   
-    echo "<script>window.alert('fill details')</script>";
+    // echo "<script>window.alert('fill details')</script>";
     }
 
 }else{
