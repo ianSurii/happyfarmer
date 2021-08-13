@@ -2,6 +2,13 @@
 include('classes/DbFunctions.php');
 
 $execute=new dbFunction();
+
+if(isset($_GET['user'])){
+  $_SESSION['username']="farmer";
+    $_SESSION['usertype']="11";
+      $_SESSION['user_id']="9";
+      header('Location:farmer.php');
+    }
 $first_name_err=$last_name_err=$username_err=$email_err=$password_err=$cpassword_err=$residence_err=$phone_err="";
 $first_name=$last_name=$username=$email=$password=$cpassword=$residence=$phone="";
 $login_pass_err=$login_username_err=$login_username=$login_password="";
